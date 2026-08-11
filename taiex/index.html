@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>台股加權指數評估儀表板</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=Spline+Sans+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+    :root{
+      --bg:#f5f3ee; --panel:#fffdfa; --inset:#faf8f3;
+      --ink:#242a32; --ink2:#475059; --sub:#8a9099;
+      --hair:#edeae3; --hair2:#e4e0d7;
+      --red:#c4453f; --green:#1f8a55; --amber:#bd8a1c;
+      --blue:#2f6f9f; --violet:#7a59c2;
+      --shadow:0 1px 2px rgba(50,45,30,.04),0 6px 22px rgba(50,45,30,.06);
+      --shadow-h:0 2px 6px rgba(50,45,30,.06),0 14px 36px rgba(50,45,30,.10);
+      --r:18px;
+      --f-disp:'Schibsted Grotesk','Noto Sans TC',-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;
+      --f-body:'Noto Sans TC',-apple-system,'PingFang TC','Microsoft JhengHei','Segoe UI',sans-serif;
+      --f-num:'Spline Sans Mono','JetBrains Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-text-size-adjust:100%}
+    body{font-family:var(--f-body);background:
+        radial-gradient(1200px 500px at 80% -8%,rgba(196,69,63,.05),transparent 60%),
+        radial-gradient(1000px 460px at 0% 0%,rgba(47,111,159,.05),transparent 55%),
+        var(--bg);
+      color:var(--ink2);line-height:1.62;font-size:15.5px;letter-spacing:.1px;
+      padding:30px 22px 48px;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1140px;margin:0 auto}
+    .num{font-family:var(--f-num);font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+    .eyebrow{font-family:var(--f-disp);font-size:11.5px;font-weight:700;letter-spacing:2.4px;
+      text-transform:uppercase;color:var(--sub)}
+    h1,h2,h3{font-family:var(--f-disp);color:var(--ink);letter-spacing:.2px}
+
+    .rise{opacity:0;transform:translateY(10px);animation:rise .55s cubic-bezier(.2,.7,.3,1) forwards}
+    @keyframes rise{to{opacity:1;transform:none}}
+
+    .hero{display:flex;justify-content:space-between;align-items:flex-end;gap:26px;flex-wrap:wrap;
+      padding-bottom:20px;margin-bottom:24px;border-bottom:1.5px solid var(--hair2)}
+    .hero h1{font-size:25px;font-weight:800;margin:5px 0 6px}
+    .hero-meta{font-size:13px;color:var(--sub)}
+    .hero-r{text-align:right;min-width:240px}
+    .hero-num{font-family:var(--f-num);font-size:46px;font-weight:600;line-height:.98;letter-spacing:-.5px}
+    .hero-chg{font-family:var(--f-num);font-size:16px;font-weight:600;margin-top:5px}
+    .spark{width:240px;height:48px;margin:8px 0 2px;display:block;margin-left:auto}
+    .hero-sub{font-size:12.5px;color:var(--sub)}
+
+    .card{background:var(--panel);border:1px solid var(--hair);border-radius:var(--r);
+      box-shadow:var(--shadow);transition:transform .22s ease,box-shadow .22s ease}
+    .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
+    .sect-label{display:block;margin-bottom:14px}
+
+    .decks{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+    .deck{position:relative;padding:24px 26px 22px;overflow:hidden}
+    .deck:before{content:'';position:absolute;left:0;right:0;top:0;height:4px}
+    .deck.long:before{background:linear-gradient(90deg,var(--blue),#5fa0ce)}
+    .deck.short:before{background:linear-gradient(90deg,var(--violet),#a98ae0)}
+    .deck-body{display:flex;align-items:center;gap:18px;margin-top:14px}
+    .gauge{width:188px;height:120px;flex:none}
+    .g-num{font-family:var(--f-num);font-size:38px;font-weight:600}
+    .g-lab{font-size:11px;fill:var(--sub);font-family:var(--f-body)}
+    .g-end{font-size:11px;fill:var(--sub);font-family:var(--f-body)}
+    .deck-right{flex:1}
+    .pill{display:inline-block;padding:7px 20px;border-radius:999px;color:#fff;font-weight:800;
+      font-family:var(--f-disp);font-size:19px;letter-spacing:1px;box-shadow:0 4px 14px rgba(0,0,0,.10)}
+    .deck-tag{font-size:13px;color:var(--sub);margin-top:10px}
+    .deck-one{font-size:14px;line-height:1.78;color:var(--ink2);margin-top:16px;
+      padding-top:15px;border-top:1px solid var(--hair)}
+
+    .banner{padding:22px 26px;margin-bottom:22px}
+    .banner-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0 16px}
+    .tag{display:inline-block;padding:5px 14px;border-radius:8px;color:#fff;font-weight:700;
+      font-family:var(--f-disp);font-size:13.5px;letter-spacing:.5px}
+    .banner-note{font-size:13.5px;color:var(--ink2)}
+    .struct{display:grid;grid-template-columns:1.05fr 1fr;gap:26px}
+    .mini-h{font-size:12px;color:var(--sub);font-weight:600;margin-bottom:9px;letter-spacing:.4px}
+    .t8{display:flex;align-items:center;gap:10px;font-size:13px;margin:6px 0}
+    .t8-n{width:80px;color:var(--ink2)}
+    .t8-bar{flex:1;background:var(--hair);border-radius:5px;height:12px;overflow:hidden}
+    .t8-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),#6aa6d0);border-radius:5px}
+    .t8-w{width:50px;text-align:right;font-family:var(--f-num);font-weight:600;color:var(--ink)}
+    .diverg{font-size:13.5px;line-height:1.72;background:var(--inset);border-radius:12px;
+      padding:14px 16px;border:1px solid var(--hair)}
+    .struct-stat{font-size:13px;color:var(--sub);margin-top:12px;line-height:1.9}
+    .struct-stat b{font-family:var(--f-num);color:var(--ink)}
+
+    .pbwrap{padding:22px 26px;margin-bottom:22px}
+    .pbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 34px}
+    .pb-head{display:flex;justify-content:space-between;align-items:baseline}
+    .pb-l{font-size:14px;font-weight:600;color:var(--ink)}
+    .pb-v{font-family:var(--f-num);font-size:19px;font-weight:600}
+    .pb-v i{font-style:normal;font-size:11px;color:var(--sub);margin-left:1px}
+    .pb-track{position:relative;background:var(--hair);height:10px;border-radius:6px;margin:8px 0 6px}
+    .pb-fill{position:absolute;left:0;top:0;height:100%;border-radius:6px;
+      background:linear-gradient(90deg,color-mix(in srgb,var(--c) 78%,white),var(--c));
+      transition:width .9s cubic-bezier(.2,.7,.3,1)}
+    .pb-mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1.5px;background:var(--hair2);border-radius:2px}
+    .pb-hint{font-size:12.5px;color:var(--sub);line-height:1.5}
+
+    .panels{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px}
+    .panel{padding:18px 20px}
+    .panel h3{font-size:14.5px;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+    .dot{width:10px;height:10px;border-radius:50%;flex:none}
+    .kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0}
+    .kv+.kv{border-top:1px solid var(--hair)}
+    .kv-l{font-size:13.5px;color:var(--ink2)}
+    .kv-r{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+    .kv-v{font-family:var(--f-num);font-weight:600;font-size:15px}
+    .kv-sub{font-size:11.5px;color:var(--sub);line-height:1.4}
+    .panel .pb-hint{margin-top:8px}
+    .splitwrap{margin-top:12px;padding-top:12px;border-top:1px solid var(--hair)}
+    .splitwrap .mini-h{margin-bottom:7px}
+    .chip{display:inline-block;font-family:var(--f-num);font-size:11.5px;padding:4px 9px;
+      background:var(--inset);border:1px solid var(--hair);border-radius:7px;margin:3px 4px 0 0;font-weight:600}
+
+    .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+    .bb .col{padding:18px 22px}
+    .bb h3{font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+    .bb ul{list-style:none}
+    .bb li{font-size:13.5px;line-height:1.62;padding:9px 0 9px 22px;position:relative;color:var(--ink2)}
+    .bb li+li{border-top:1px solid var(--hair)}
+    .bb li:before{position:absolute;left:0;top:10px;font-size:10px}
+    .bull li:before{content:'▲';color:var(--red)}
+    .bear li:before{content:'▼';color:var(--green)}
+
+    .foot{padding:20px 26px;font-size:13px;color:var(--ink2)}
+    .foot h3{font-size:14px;margin-bottom:10px}
+    .conf{display:inline-block;padding:3px 12px;border-radius:8px;background:#fbf2db;
+      color:#8a6410;font-weight:700;font-family:var(--f-disp);font-size:12.5px;letter-spacing:.4px}
+    .srcgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 28px;margin:12px 0}
+    .src{font-size:12.5px;color:var(--sub)}
+    .src b{color:var(--ink2);font-weight:600}
+    .warn{background:#fdf6ec;border:1px solid #f0e2c8;border-left:3px solid var(--amber);
+      padding:12px 15px;border-radius:10px;margin-top:10px;font-size:12.5px;line-height:1.65;color:#6f5418}
+    .warn b{font-family:var(--f-num)}
+
+    /* 質性層(Claude 研判) */
+    .qbadge{display:inline-block;padding:3px 11px;border-radius:7px;background:#eef3f8;color:#2f6f9f;
+      font-family:var(--f-disp);font-weight:700;font-size:11px;letter-spacing:1px;margin-left:8px;vertical-align:middle}
+    .qhead{font-size:18px;line-height:1.6;color:var(--ink);font-weight:700;font-family:var(--f-disp);margin:10px 0 12px}
+    .qread{font-size:14px;line-height:1.85;color:var(--ink2)}
+    .drv{display:flex;gap:11px;padding:11px 0}
+    .drv+.drv{border-top:1px solid var(--hair)}
+    .drv-dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none}
+    .drv-body{flex:1}
+    .drv-t{font-size:13.5px;font-weight:700;color:var(--ink)}
+    .drv-t .cf{font-family:var(--f-num);font-size:11px;font-weight:600;color:var(--sub);margin-left:6px}
+    .drv-d{font-size:13px;line-height:1.7;color:var(--ink2);margin-top:2px}
+    .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .qblock .mini-h{margin-top:4px}
+    .qblock p{font-size:13.5px;line-height:1.75;color:var(--ink2);margin-bottom:12px}
+    .cal{display:flex;gap:13px;padding:12px 0}
+    .cal+.cal{border-top:1px solid var(--hair)}
+    .cal-when{font-family:var(--f-num);font-weight:700;font-size:13px;color:var(--ink);min-width:58px;
+      padding-top:1px}
+    .cal-body{flex:1}
+    .cal-t{font-size:13.5px;font-weight:700;color:var(--ink)}
+    .cal-tag{display:inline-block;font-size:10.5px;font-weight:700;font-family:var(--f-disp);
+      padding:1px 8px;border-radius:6px;margin-left:8px;letter-spacing:.5px;vertical-align:middle}
+    .cal-d{font-size:12.5px;line-height:1.65;color:var(--ink2);margin-top:2px}
+    .qplace{padding:20px 26px;margin-bottom:22px;text-align:center;color:var(--sub);font-size:13.5px;
+      border:1px dashed var(--hair2);background:var(--inset)}
+
+    .qalert{background:#fdf0ee;border:1px solid #f0d4cf;border-left:4px solid var(--red);
+      padding:15px 20px;margin-bottom:18px}
+    .qalert-t{font-weight:800;color:#8d2f29;font-family:var(--f-disp);font-size:13.5px;margin-bottom:6px}
+    .qalert ul{list-style:none}
+    .qalert li{font-size:12.5px;color:#7a3b35;padding:3px 0 3px 16px;position:relative;line-height:1.62}
+    .qalert li:before{content:'•';position:absolute;left:2px;color:var(--red)}
+
+    @media(max-width:860px){
+      body{padding:20px 14px 36px;font-size:15px}
+      .decks,.struct,.panels,.pbgrid,.bb,.srcgrid,.qgrid{grid-template-columns:1fr}
+      .hero-r{text-align:left;min-width:0}.spark{margin-left:0}
+      .deck-body{flex-direction:column;align-items:flex-start}
+    }
+    </style></head><body><div id="__snap_banner" style="font-family:system-ui,'Noto Sans TC',sans-serif;
+ background:#1a1d24;color:#c8cdd6;padding:10px 16px;font-size:13px;line-height:1.6;
+ border-bottom:2px solid #FF8C00">
+<b style="color:#FF8C00">台股大盤儀表板</b> — 加權指數壓力/結構判讀
+&nbsp;｜&nbsp;快照時間 <b>2026-09-20 01:00 (UTC+8)</b>
+<div style="color:#8a9099;font-size:11px;margin-top:3px">本頁為延遲快照，僅供個人研究參考，不構成任何投資建議或要約。資料可能有誤或過時，使用者應自行查證。</div>
+</div>
+<div class="wrap">
+
+  <header class="hero rise" style="animation-delay:0.00s">
+    <div>
+      <div class="eyebrow">Taiwan Weighted Index · 評估儀表板</div>
+      <h1>台股加權指數</h1>
+      <div class="hero-meta">基準日 115/09/18（20260918）· 建置 2026-09-19 06:21:16 · 雙軌 nowcast</div>
+    </div>
+    <div class="hero-r">
+      <div class="hero-num" style="color:#c4453f">47,181</div>
+      <div class="hero-chg" style="color:#c4453f">+893 點　(+1.93%)</div>
+      <svg viewBox="0 0 300 48" class="spark" preserveAspectRatio="none">
+          <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#c4453f" stop-opacity="0.20"/><stop offset="1" stop-color="#c4453f" stop-opacity="0"/></linearGradient></defs>
+          <polygon points="0,46 0.0,20.2 5.1,18.0 10.2,12.2 15.3,7.6 20.3,9.0 25.4,8.8 30.5,10.0 35.6,15.5 40.7,14.2 45.8,16.1 50.8,16.0 55.9,19.3 61.0,14.7 66.1,14.7 71.2,29.9 76.3,31.1 81.4,21.9 86.4,18.8 91.5,18.7 96.6,24.9 101.7,25.0 106.8,35.4 111.9,43.5 116.9,44.0 122.0,27.6 127.1,26.3 132.2,26.4 137.3,19.9 142.4,21.1 147.5,21.9 152.5,18.3 157.6,17.3 162.7,15.3 167.8,12.7 172.9,13.8 178.0,13.6 183.1,16.4 188.1,19.4 193.2,18.3 198.3,16.8 203.4,19.2 208.5,17.1 213.6,13.7 218.6,12.9 223.7,11.1 228.8,12.2 233.9,7.9 239.0,12.0 244.1,13.5 249.2,10.0 254.2,6.0 259.3,7.1 264.4,6.7 269.5,8.0 274.6,11.9 279.7,13.5 284.7,15.3 289.8,13.6 294.9,11.3 300.0,6.7 300,46" fill="url(#sg)"/>
+          <polyline points="0.0,20.2 5.1,18.0 10.2,12.2 15.3,7.6 20.3,9.0 25.4,8.8 30.5,10.0 35.6,15.5 40.7,14.2 45.8,16.1 50.8,16.0 55.9,19.3 61.0,14.7 66.1,14.7 71.2,29.9 76.3,31.1 81.4,21.9 86.4,18.8 91.5,18.7 96.6,24.9 101.7,25.0 106.8,35.4 111.9,43.5 116.9,44.0 122.0,27.6 127.1,26.3 132.2,26.4 137.3,19.9 142.4,21.1 147.5,21.9 152.5,18.3 157.6,17.3 162.7,15.3 167.8,12.7 172.9,13.8 178.0,13.6 183.1,16.4 188.1,19.4 193.2,18.3 198.3,16.8 203.4,19.2 208.5,17.1 213.6,13.7 218.6,12.9 223.7,11.1 228.8,12.2 233.9,7.9 239.0,12.0 244.1,13.5 249.2,10.0 254.2,6.0 259.3,7.1 264.4,6.7 269.5,8.0 274.6,11.9 279.7,13.5 284.7,15.3 289.8,13.6 294.9,11.3 300.0,6.7" fill="none" stroke="#c4453f" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      <div class="hero-sub">官方上市成交值 11,423 億</div>
+    </div>
+  </header>
+
+  
+
+  <section class="decks">
+    <article class="card deck long rise" style="animation-delay:0.06s">
+      <div class="eyebrow">長線水位 · Long-term</div>
+      <div class="deck-body">
+        <svg viewBox="0 4 200 128" class="gauge">
+      <path d="M 22.0 100.0 A 78 78 0 1 1 178.0 100.0" stroke="var(--hair2)" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M 22.0 100.0 A 78 78 0 0 1 137.6 31.6" stroke="#c4453f" stroke-width="16" fill="none" stroke-linecap="round"/><line x1="58.9" y1="43.4" x2="49.5" y2="30.4" stroke="#fff" stroke-width="2.4"/><line x1="84.7" y1="31.7" x2="81.2" y2="16.1" stroke="#fff" stroke-width="2.4"/><line x1="117.4" y1="32.2" x2="121.4" y2="16.7" stroke="#fff" stroke-width="2.4"/><line x1="141.1" y1="43.4" x2="150.5" y2="30.4" stroke="#fff" stroke-width="2.4"/>
+      <text x="100" y="94" text-anchor="middle" class="g-num" fill="#c4453f">66</text>
+      <text x="100" y="116" text-anchor="middle" class="g-lab">綜合分</text>
+      <text x="20" y="120" class="g-end">空</text>
+      <text x="180" y="120" text-anchor="end" class="g-end">多</text>
+    </svg>
+        <div class="deck-right">
+          <span class="pill" style="background:#c4453f">偏多</span>
+          <div class="deck-tag">估值／基本面權重為主</div>
+        </div>
+      </div>
+      <p class="deck-one">估值偏貴（市值加權 PE 25 倍、殖利率僅 1.63%）壓抑長線上行空間；惟全市場營收年增 +51% 撐住基本面。長線水位偏多，過熱區不宜追高加碼，回測季線（MA60≈45,172）站穩再評估分批。</p>
+    </article>
+    <article class="card deck short rise" style="animation-delay:0.12s">
+      <div class="eyebrow">短線時機 · Short-term</div>
+      <div class="deck-body">
+        <svg viewBox="0 4 200 128" class="gauge">
+      <path d="M 22.0 100.0 A 78 78 0 1 1 178.0 100.0" stroke="var(--hair2)" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M 22.0 100.0 A 78 78 0 0 1 141.8 34.1" stroke="#c4453f" stroke-width="16" fill="none" stroke-linecap="round"/><line x1="58.9" y1="43.4" x2="49.5" y2="30.4" stroke="#fff" stroke-width="2.4"/><line x1="84.7" y1="31.7" x2="81.2" y2="16.1" stroke="#fff" stroke-width="2.4"/><line x1="117.4" y1="32.2" x2="121.4" y2="16.7" stroke="#fff" stroke-width="2.4"/><line x1="141.1" y1="43.4" x2="150.5" y2="30.4" stroke="#fff" stroke-width="2.4"/>
+      <text x="100" y="94" text-anchor="middle" class="g-num" fill="#c4453f">68</text>
+      <text x="100" y="116" text-anchor="middle" class="g-lab">綜合分</text>
+      <text x="20" y="120" class="g-end">空</text>
+      <text x="180" y="120" text-anchor="end" class="g-end">多</text>
+    </svg>
+        <div class="deck-right">
+          <span class="pill" style="background:#c4453f">偏多</span>
+          <div class="deck-tag">籌碼／技術／廣度權重為主</div>
+        </div>
+      </div>
+      <p class="deck-one">短線時機偏多。廣度尚未轉弱，急殺才轉空；跌破月線（MA20≈46,258）為短線轉弱確認，守穩則維持高檔震盪。</p>
+    </article>
+  </section>
+
+  <section class="card banner rise" style="animation-delay:0.18s">
+      <span class="eyebrow sect-label">今日盤面解讀<span class="qbadge">CLAUDE 質性研判</span></span>
+      <div class="qhead">升息落地、央行不跟進：兩個交易日收復月線靠台積電與塑化補漲，但量能只有 20 日均量的八成、僅 35.1% 個股站上季線——這是估值重定價後的空方回補，還不是全面性資金回流</div>
+      <div class="qread">錨點日（2026-09-16）加權指數收 45,848.9 點、漲 337.41 點（+0.74%），成交 6,760 億元（官方口徑）／8,067 億元（資料庫口徑），僅為 20 日均量 10,245 億元的 78.7%、量能百分位 5。指數站上季線 45,153（乖離 +1.54%）但仍在月線 45,092～46,092 之下；KD 之 K 28.5 低於 D 44.9、MACD 柱狀體 -306.39，短線技術仍屬弱勢修復。基本面則是另一個世界：2026 年 8 月市場整體月營收年增 50.9%，剔除台積電後仍有 50.6%，覆蓋 1,971 家——成長是全面的，不是單一公司的。錨點之後兩個交易日盤面明顯翻轉：9 月 16 日（美東）聯準會升息 1 碼至 3.75%～4.00%（2023 年 7 月以來首次升息），9 月 17 日台股即上漲 439.1 點收 46,288 點、站回月線 46,159，成交 8,194.05 億元，外資翻為買超 121.85 億元、終止連 5 賣（中央社、經濟日報 2026-09-17）；同日台灣央行利率連 10 凍。9 月 18 日早盤再漲逾 800 點站上 46,700、台積電漲 60 元至 2,440 元（Yahoo 股市 2026-09-18）。需要分清楚的是：兩日反彈的性質，是「升息這件事終於有了確定值」帶來的風險溢價回吐，加上塑化這種低本益比、低外資持股族群的補漲（台塑化 +7.08%、南亞 +5.36%），而不是量能與廣度同步改善。錨點日的廣度數據講得很清楚——上漲 1,320 家對下跌 428 家、漲跌比 3.08 看似健康，但站上季線的個股只有 35.1%，240 日新低 110 家仍多於新高 28 家。指數的位置比個股的位置好，差額由台積電的 41.19% 權重填補。</div>
+      <div style="margin-top:14px"><div class="drv"><span class="drv-dot" style="background:#8a9099"></span><div class="drv-body"><div class="drv-t">聯準會 9 月 16 日升息 1 碼至 3.75%～4.00%，升息循環重啟而非結束<span class="cf">信心 92</span></div><div class="drv-d">FOMC 以 12 比 0 通過升息 25 個基點，為 2023 年 7 月以來首次升息，今年前五次會議皆按兵不動。點陣圖顯示 18 位與會者中有 16 位預期還會再升一次、其中 4 位認為可能再升兩次；預估 2026 年個人消費支出（PCE）通膨 3.7%、2027 年回落至 2.3%。主席 Warsh 表示通膨仍然過高、承諾「更及時地回到 2%」（CNBC、Fox Business、Yahoo Finance 2026-09-16）。對台股的意義是雙向的：不確定性消失讓風險溢價回吐（9/17 即反映），但貼現率路徑往上，對錨點日大盤本益比 24.7 倍、前瞻本益比 20.5 倍、殖利率僅 1.68% 的估值結構是持續性壓力，而非一次性利空。</div></div></div><div class="drv"><span class="drv-dot" style="background:#8a9099"></span><div class="drv-body"><div class="drv-t">台灣央行利率連 10 凍並上修全年 GDP 至 11.48%，台美利差擴大但內需信用邊際放鬆<span class="cf">信心 90</span></div><div class="drv-d">央行 2026-09-17 第 3 季理監事會決議重貼現率維持 2%、擔保放款融通 2.375%、短期融通 4.25%，為連續第 10 季不動，未跟進聯準會升息；同時上修 2026 年經濟成長率至 11.48%、2027 年估 5.82%，消費者物價上漲率估 2.03%。並自 9 月 18 日起將自然人第 2 戶購屋貸款最高成數由 6 成調高至 7 成（Newtalk、壹蘋新聞、Yahoo 股市 2026-09-17）。對台股是兩層利多：一是不升息＝本地資金成本不變，二是房貸鬆綁直接利多金融與營建，錨點日結構表中富邦金（權重 1.43%）、國泰金（1.101%）即屬受益端。代價是台美利差進一步擴大，對新台幣構成貶值壓力——這對出口電子是順風，對進口與壽險避險成本是逆風。</div></div></div><div class="drv"><span class="drv-dot" style="background:#8a9099"></span><div class="drv-body"><div class="drv-t">2026 年 8 月市場整體月營收年增 50.9%，剔除台積電仍有 50.6%<span class="cf">信心 90</span></div><div class="drv-d">錨點檔基本面欄位（覆蓋 1,971 家）顯示，8 月營收年增 50.9%，剔除台積電後 50.6%——兩個數字幾乎相同，意味成長動能並非集中在權王一家，而是人工智慧（AI）供應鏈的全面性擴張。前瞻本益比 20.5 倍相對於這個成長率並不昂貴。這是目前最硬的多方證據，也是「拉回有買盤」的真正來源。風險在基期：2027 年同期比較基準將被墊高，年增率的數學性收斂幾乎必然，屆時市場要重新判斷的是絕對金額而非年增率。</div></div></div><div class="drv"><span class="drv-dot" style="background:#8a9099"></span><div class="drv-body"><div class="drv-t">量能萎縮到 20 日均量的 78.7%、量能百分位 5，反彈缺乏增量資金<span class="cf">信心 88</span></div><div class="drv-d">錨點日成交 8,067 億元對 20 日均量 10,245 億元，差距 -21.3%，量能百分位僅 5——意即近期區間中最低的 5%。9 月 17 日指數大漲 439 點當天成交 8,194.05 億元，仍低於 20 日均量約 20%。同時當日盤中最高 46,874.84 點（一度大漲 1,025.94 點）收斂至 46,288 點，盤中回吐近 587 點，留下明顯上影線。價漲量縮加上尾盤收斂，典型的空方回補特徵而非多方增量進場。當沖比 44.9% 亦顯示成交結構偏短線。</div></div></div><div class="drv"><span class="drv-dot" style="background:#8a9099"></span><div class="drv-body"><div class="drv-t">八大分點合計賣超 63.1 億元，但外資內部嚴重對作<span class="cf">信心 85</span></div><div class="drv-d">錨點日八大（實為 9 家）分點淨額 -63.1 億元，拆開看是兩股力量互相抵銷：摩根大通 -132.53 億元、摩根士丹利 -130.1 億元，合計賣超 262.63 億元；凱基台北 +73.1 億元、花旗環球 +62.77 億元、高盛 +55.51 億元，合計買超 191.38 億元。同時官方口徑上市外資賣超 179.8 億元，但資料庫外資買超家數 953 家多於賣超 814 家——賣壓集中在少數權值股，中小型股外資反而偏買。這種「指數賣、個股買」的組合，通常對應的是指數避險或權值調節，而非全面撤出；但只要摩根大通與摩根士丹利這條腿不轉向，指數上檔就有實質賣壓。</div></div></div></div>
+      <div class="diverg" style="margin-top:14px;color:var(--ink2)"><b style="color:var(--ink);font-family:var(--f-disp)">外資動向解讀　</b>錨點日（2026-09-16）官方口徑外資賣超上市 179.8 億元、上櫃 25.07 億元，合計 204.9 億元，為連續第 5 個交易日賣超；資料庫口徑 -168.3 億元、z 值 -0.02（就其自身分布而言屬中性強度，不是恐慌性賣壓）。關鍵在結構：外資買超家數 953 家多於賣超 814 家，代表賣壓集中在少數權值股，中小型股反而偏買——這是指數層級的調節或避險，不是全面撤出。分點更把分歧攤開：摩根大通 -132.53 億元、摩根士丹利 -130.1 億元（合計 -262.63 億元）對上凱基台北 +73.1 億元、花旗環球 +62.77 億元、高盛 +55.51 億元（合計 +191.38 億元），八大分點淨額僅 -63.1 億元。同期投信買超 134.0 億元（上市 106.46／上櫃 27.58）持續作為對手盤，自營商賣超 119.6 億元。錨點日之後：9 月 17 日官方外資轉為買超 121.85 億元、三大法人合計買超 214.77 億元，終止連 5 賣（中央社、經濟日報 2026-09-17）——但單日翻多尚不足以判定趨勢轉向，需觀察摩根大通與摩根士丹利兩大分點是否同步轉買。信心度 85（錨點數據為實證，9/17 翻買為單一交易日觀察）。</div>
+    </section>
+
+  <section class="card banner rise" style="animation-delay:0.18s">
+    <span class="eyebrow sect-label">市場結構層 · Market Structure</span>
+    <div class="banner-top">
+      <span class="tag" style="background:#c4453f">多頭趨勢區</span>
+      <span class="banner-note">指數距季線乖離 <b class="num" style="color:#c4453f">+4.45%</b>，已站上年線</span>
+    </div>
+    <div class="struct">
+      <div>
+        <div class="mini-h">權值集中度（前 8 大，佔加權指數）</div>
+        <div class="t8"><span class="t8-n">台積電</span><span class="t8-bar"><i style="width:79%"></i></span><span class="t8-w">41.4%</span></div><div class="t8"><span class="t8-n">聯發科</span><span class="t8-bar"><i style="width:9%"></i></span><span class="t8-w">4.9%</span></div><div class="t8"><span class="t8-n">台達電</span><span class="t8-bar"><i style="width:6%"></i></span><span class="t8-w">2.9%</span></div><div class="t8"><span class="t8-n">鴻海</span><span class="t8-bar"><i style="width:4%"></i></span><span class="t8-w">2.3%</span></div><div class="t8"><span class="t8-n">日月光投控</span><span class="t8-bar"><i style="width:4%"></i></span><span class="t8-w">1.9%</span></div><div class="t8"><span class="t8-n">富邦金</span><span class="t8-bar"><i style="width:3%"></i></span><span class="t8-w">1.4%</span></div><div class="t8"><span class="t8-n">聯電</span><span class="t8-bar"><i style="width:2%"></i></span><span class="t8-w">1.3%</span></div><div class="t8"><span class="t8-n">南亞</span><span class="t8-bar"><i style="width:2%"></i></span><span class="t8-w">1.2%</span></div>
+      </div>
+      <div>
+        <div class="mini-h">廣度 vs 指數 背離檢視</div>
+        <div class="diverg" style="color:#8a9099">指數與市場廣度方向大致一致，目前無明顯量價背離訊號。</div>
+        <div class="struct-stat">台積電權重 <b>41.4%</b> · 前五大 <b>53%</b> · 全市場總市值 <b>1,646,955</b> 億</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card banner rise" style="animation-delay:0.40s">
+      <span class="eyebrow sect-label">戰略結構層<span class="qbadge">CLAUDE 質性研判</span></span>
+      <div class="qgrid">
+        <div class="qblock">
+          <div class="mini-h">核心驅動</div><p>人工智慧（AI）供應鏈的實質訂單流。錨點日 8 月市場整體月營收年增 50.9%、剔除台積電後仍 50.6%（覆蓋 1,971 家），央行同日將 2026 年經濟成長率上修至 11.48%——這是同一件事在企業端與總體端的兩個投影。指數的定價權則高度集中：台積電權重 41.187%、前五大合計 53.13%，台積電美國存託憑證（ADR）430.26 美元、單日 +3.0%，是每日開盤方向的主要外溢來源。換句話說，核心驅動是 AI 訂單的真實性，傳導路徑卻只有一條粗管子。</p>
+          <div class="mini-h">敘事 vs 真實</div><p>市場敘事：「升息利空出盡、央行不跟進、AI 基本面強勁，指數兩日收復月線，回檔結束。」真實數據：（一）量能 8,067 億元僅 20 日均量的 78.7%、百分位 5，9/17 大漲日成交 8,194 億元仍低於均量兩成；（二）僅 35.1% 個股站上 60 日均線，240 日新低 110 家仍多於新高 28 家——中期修復只走了三分之一；（三）9/17 盤中最高 46,874.84 點收斂至 46,288 點，回吐 587 點；（四）錨點日外資仍賣超上市 179.8 億元、連 5 日賣超；（五）9/17 領漲的是塑化（台塑化 +7.08%、南亞 +5.36%、台化 +4.26%）這類低估值補漲族群，櫃買指數反而下跌 0.26%，中小型股沒有跟上。結論：指數的位置遠優於個股的位置，差額由台積電 41.187% 的權重填補。敘事說的是「全面回穩」，數據說的是「權值撐盤＋落後補漲」。</p>
+        </div>
+        <div class="qblock">
+          <div class="mini-h">Bear 壓力測試</div><p>壓力測試：（一）估值分母——升息循環重啟且點陣圖指向再升，10 年期美債殖利率 5.0%、2 年期 4.67%（錨點日），大盤本益比 24.7 倍、前瞻 20.5 倍、殖利率 1.68% 的組合，對貼現率上升的敏感度很高；若再升 1 碼且長端殖利率續揚，估值壓縮的力道會蓋過獲利成長。（二）集中度——台積電 41.187%、前五大 53.13%，指數本質上是台積電的槓桿部位；一旦 ADR 由溢價轉深度折價，指數沒有第二根支柱。（三）量能——量能百分位 5，反彈由空方回補驅動；若成交無法回到 10,245 億元之上，月線 46,092 之上的站穩就缺乏成交量背書。（四）廣度——64.9% 的個股仍在季線之下，新低 110 家對新高 28 家，若權值股休息，指數將直接暴露在真實的個股結構上。（五）籌碼——摩根大通與摩根士丹利合計賣超 262.63 億元尚未轉向。（六）行事曆——9 月 25 日至 28 日休市四天，季底作帳被迫提前到 9 月 21 日至 24 日的四個交易日內完成，之後 9 月 29 日至 30 日兩天結算，時間壓縮會放大波動。</p>
+          <div class="mini-h">結構鎖定強度 · <b style="color:#8a9099;font-family:var(--f-num)">中高。鎖定來源是可驗證的訂單實績（8 月營收年增 50.9%、剔除台積電 50.6%、覆蓋 1,971 家）與總體背書（央行上修 GDP 至 11.48%），這兩者不是靠評價假設堆出來的。但鎖定的載體高度集中於台積電（權重 41.187%）與前五大（53.13%），且評分結構顯示長線綜合 61 分（偏多）／短線綜合 56 分（中性）——長短軌分歧本身就說明：體質鎖得住，時機沒鎖住。</b></div>
+          <div style="margin-top:4px"><div class="mini-h">瓦解條件（觸發轉弱）</div><span class="chip" style="color:#1f8a55">市場整體月營收年增率連續兩個月跌破 +20%（目前 8 月為 +50.9%），且剔除台積電後的年增率落後整體逾 10 個百分點——代表成長從全面性退化為單點性</span><span class="chip" style="color:#1f8a55">加權指數收盤跌破 60 日均線 45,153 點，且前五大權值股（合計權重 53.13%）同步跌破各自季線</span><span class="chip" style="color:#1f8a55">台積電美國存託憑證（ADR）由溢價轉為折價逾 3%，且官方外資連續 10 個交易日賣超上市股票（錨點日已連 5 賣）</span><span class="chip" style="color:#1f8a55">聯準會再升息累計 2 碼以上，或美國 10 年期公債殖利率站上 5.5%（錨點日 5.0%）</span><span class="chip" style="color:#1f8a55">成交金額連續 5 個交易日低於 7,000 億元（錨點日 8,067 億元、20 日均量 10,245 億元），量能百分位持續低於 10</span><span class="chip" style="color:#1f8a55">站上 60 日均線的個股比率跌破 25%（錨點日 35.1%），且 240 日新低家數連續 5 日超過 200 家</span></div>
+        </div>
+      </div>
+    </section>
+
+  <section class="card pbwrap rise" style="animation-delay:0.24s">
+    <span class="eyebrow sect-label">六大面向評分 · 分數越高＝對台股越偏多</span>
+    <div class="pbgrid">
+      <div class="pb">
+      <div class="pb-head"><span class="pb-l">估值</span><span class="pb-v" style="color:#bd8a1c">54<i>/100</i></span></div>
+      <div class="pb-track"><span class="pb-fill" style="width:54.0%;--c:#bd8a1c"></span><span class="pb-mid"></span></div>
+      <div class="pb-hint">市值加權 PE 25 倍、殖利率 1.63%</div>
+    </div>
+      <div class="pb">
+      <div class="pb-head"><span class="pb-l">籌碼資金流</span><span class="pb-v" style="color:#c4453f">82<i>/100</i></span></div>
+      <div class="pb-track"><span class="pb-fill" style="width:82.0%;--c:#c4453f"></span><span class="pb-mid"></span></div>
+      <div class="pb-hint">外資 1,085 億、投信 103 億</div>
+    </div>
+      <div class="pb">
+      <div class="pb-head"><span class="pb-l">技術面</span><span class="pb-v" style="color:#cf6a2a">59<i>/100</i></span></div>
+      <div class="pb-track"><span class="pb-fill" style="width:59.0%;--c:#cf6a2a"></span><span class="pb-mid"></span></div>
+      <div class="pb-hint">乖離 +4.5%、KD 33</div>
+    </div>
+      <div class="pb">
+      <div class="pb-head"><span class="pb-l">市場廣度</span><span class="pb-v" style="color:#cf6a2a">61<i>/100</i></span></div>
+      <div class="pb-track"><span class="pb-fill" style="width:61.0%;--c:#cf6a2a"></span><span class="pb-mid"></span></div>
+      <div class="pb-hint">站季線 45%、新高/低 40/54 家</div>
+    </div>
+      <div class="pb">
+      <div class="pb-head"><span class="pb-l">基本面動能</span><span class="pb-v" style="color:#c4453f">73<i>/100</i></span></div>
+      <div class="pb-track"><span class="pb-fill" style="width:73.0%;--c:#c4453f"></span><span class="pb-mid"></span></div>
+      <div class="pb-hint">營收 YoY +51%、Fwd PE 21.1 倍</div>
+    </div>
+      <div class="pb">
+      <div class="pb-head"><span class="pb-l">總經國際</span><span class="pb-v" style="color:#cf6a2a">69<i>/100</i></span></div>
+      <div class="pb-track"><span class="pb-fill" style="width:69.0%;--c:#cf6a2a"></span><span class="pb-mid"></span></div>
+      <div class="pb-hint">費半 +2.8%、VIX 15</div>
+    </div>
+    </div>
+  </section>
+
+  <section class="card pbwrap rise" style="animation-delay:0.62s">
+      <span class="eyebrow sect-label">前瞻行事曆 · 催化與風險<span class="qbadge">CLAUDE 質性研判</span></span>
+      <div class="cal"><span class="cal-when">2026-09-18（五）</span><div class="cal-body"><div class="cal-t">美股四巫日（指數期貨、指數選擇權、個股期貨、個股選擇權同步結算）<span class="cal-tag" style="background:#fbf2db;color:#8a6410">觀察</span></div><div class="cal-d">9 月第三個星期五為季度四巫日，與本週 FOMC 決議相隔兩個交易日，部位調整與展期集中在同一週。歷史特徵是結算前後成交量放大、盤中波動加劇，對台股的影響主要透過隔夜美股與台積電美國存託憑證（ADR）傳導。在台股量能僅 20 日均量八成的環境下，外溢波動的相對衝擊會被放大。</div></div></div><div class="cal"><span class="cal-when">2026-09-21～09-24（一～四）</span><div class="cal-body"><div class="cal-t">連假前僅四個交易日，季底作帳被迫提前<span class="cal-tag" style="background:#fbf2db;color:#8a6410">觀察</span></div><div class="cal-d">由於 9 月 25 日至 28 日休市，第三季作帳行情的時間窗被壓縮到這四個交易日，加上 9 月 29 日至 30 日兩個交易日收尾。法人若要完成季底部位調整，動作必須前移且集中——這通常意味著強勢股續強、弱勢股被放棄的分化加劇，而非指數層級的普漲。留意投信（錨點日買超 134.0 億元）是否延續作帳買盤。</div></div></div><div class="cal"><span class="cal-when">2026-09-25～09-28（五～一）</span><div class="cal-body"><div class="cal-t">台股休市四天（中秋節 9/25、孔子誕辰紀念日 9/28）<span class="cal-tag" style="background:#fbf2db;color:#8a6410">觀察</span></div><div class="cal-d">集中交易市場連同週末共休市四天（工商時報 2026-09-17）。四天空窗期間美股照常交易三個交易日（9/25、9/28 及週末前後），台股承擔完整的隔夜缺口風險；在升息循環重啟、美債殖利率 5.0% 的背景下，假期前的減碼壓力與假期後的跳空風險都需要納入部位規劃。</div></div></div><div class="cal"><span class="cal-when">2026-09-29～09-30（二～三）</span><div class="cal-body"><div class="cal-t">第三季最後兩個交易日，季底結算與投信作帳收尾<span class="cal-tag" style="background:#fbf2db;color:#8a6410">觀察</span></div><div class="cal-d">連假後僅剩兩個交易日完成季底淨值定價，基金持股的季底評價效果集中於此。歷史上此類「假期切割季底」的年份，作帳行情往往在假期前已提前反映，假期後兩天反而容易出現獲利了結。此為結構性推論，非實證。</div></div></div><div class="cal"><span class="cal-when">2026-09 下旬（確切日期待查證）</span><div class="cal-body"><div class="cal-t">經濟部統計處公布 2026 年 8 月外銷訂單<span class="cal-tag" style="background:#fbf2db;color:#8a6410">觀察</span></div><div class="cal-d">外銷訂單為台股月營收年增 50.9% 的上游驗證指標——若訂單年增與營收年增同向，代表 AI 供應鏈需求尚未見頂；若訂單年增顯著落後營收年增，則意味目前的營收來自既有在手訂單的出貨，而非新增需求。經濟部統計處通常於每月 20 日前後公布前一月數據，2026 年 8 月數據的確切公布日期本次搜尋未能查證，請以經濟部公告為準。</div></div></div><div class="cal"><span class="cal-when">2026-10 下旬（確切日期待查證）</span><div class="cal-body"><div class="cal-t">下一次聯邦公開市場操作委員會（FOMC）會議<span class="cal-tag" style="background:#fbf2db;color:#8a6410">觀察</span></div><div class="cal-d">9 月點陣圖顯示 18 位與會者中 16 位預期年內還會再升息一次，市場已定價 2026 年再升 1 碼（CNBC 2026-09-16）。下次會議是驗證這條路徑的第一個檢查點：若升息如期，對大盤本益比 24.7 倍、前瞻 20.5 倍的估值結構是延續性壓力；若暫停，則風險溢價可望再度回吐。本次搜尋未取得 2026 年 10 月 FOMC 的確切日期，請以聯準會官方行事曆為準。</div></div></div>
+    </section>
+
+  <section class="panels">
+    <div class="card panel rise" style="animation-delay:0.30s">
+      <h3><span class="dot" style="background:#bd8a1c"></span>估值</h3>
+      <div class="kv"><span class="kv-l">市值加權本益比（近四季）</span><span class="kv-r"><span class="kv-v" style="color:#bd8a1c">25.4 倍</span></span></div>
+      <div class="kv"><span class="kv-l">市值加權股價淨值比</span><span class="kv-r"><span class="kv-v" style="color:#242a32">4.12 倍</span></span></div>
+      <div class="kv"><span class="kv-l">市值加權現金殖利率</span><span class="kv-r"><span class="kv-v" style="color:#1f8a55">1.63%</span></span></div>
+      <div class="kv"><span class="kv-l">Forward PE（機構估明年）</span><span class="kv-r"><span class="kv-v" style="color:#242a32">21.1 倍</span></span></div>
+      <div class="pb-hint">市值加權·個股口徑(近四季);官方大盤 PE/PB 由 TWSE 端另補,雙軌互校</div>
+    </div>
+
+    <div class="card panel rise" style="animation-delay:0.36s">
+      <h3><span class="dot" style="background:#c4453f"></span>籌碼資金流（官方口徑）</h3>
+      <div class="kv"><span class="kv-l">外資買賣超</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">1,085 億</span><span class="kv-sub">上市 870 ＋ 上櫃 215 億</span></span></div>
+      <div class="kv"><span class="kv-l">投信買賣超</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">103 億</span></span></div>
+      <div class="kv"><span class="kv-l">自營商買賣超</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">275 億</span></span></div>
+      <div class="kv"><span class="kv-l">外資流向 z 值</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">2.54 σ</span><span class="kv-sub">個股口徑 1,034 億 · 買 1041／賣 755 檔</span></span></div>
+      <div class="splitwrap"><div class="mini-h">八大外資分點合計 <b class="num" style="color:#c4453f">+1,116 億</b></div><span class="chip" style="color:#c4453f">野村&nbsp;+1 億</span><span class="chip" style="color:#c4453f">摩根大通&nbsp;+589 億</span><span class="chip" style="color:#c4453f">高盛&nbsp;+28 億</span><span class="chip" style="color:#1f8a55">瑞銀&nbsp;-22 億</span><span class="chip" style="color:#1f8a55">美林&nbsp;-9 億</span><span class="chip" style="color:#c4453f">摩根士丹利&nbsp;+132 億</span><span class="chip" style="color:#c4453f">花旗環球&nbsp;+109 億</span><span class="chip" style="color:#c4453f">麥格理&nbsp;+69 億</span><span class="chip" style="color:#c4453f">凱基台北&nbsp;+218 億</span></div>
+    </div>
+
+    <div class="card panel rise" style="animation-delay:0.42s">
+      <h3><span class="dot" style="background:#cf6a2a"></span>市場廣度</h3>
+      <div class="kv"><span class="kv-l">上漲 / 下跌 / 平盤（家）</span><span class="kv-r"><span class="kv-v" style="color:#242a32"><span style='color:#c4453f'>1318</span> / <span style='color:#1f8a55'>475</span> / 177</span></span></div>
+      <div class="kv"><span class="kv-l">漲跌比 (A/D)</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">2.77</span></span></div>
+      <div class="kv"><span class="kv-l">站上季線比例</span><span class="kv-r"><span class="kv-v" style="color:#bd8a1c">45.1%</span></span></div>
+      <div class="kv"><span class="kv-l">創 240 日新高 / 新低（家）</span><span class="kv-r"><span class="kv-v" style="color:#242a32"><span style='color:#c4453f'>40</span> / <span style='color:#1f8a55'>54</span></span></span></div>
+    </div>
+
+    <div class="card panel rise" style="animation-delay:0.48s">
+      <h3><span class="dot" style="background:#cf6a2a"></span>技術面（指數）</h3>
+      <div class="kv"><span class="kv-l">收盤 / 月線 MA20</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">47,181 / 46,258</span></span></div>
+      <div class="kv"><span class="kv-l">季線 MA60 / 年線 MA240</span><span class="kv-r"><span class="kv-v" style="color:#242a32">45,172 / 36,382</span></span></div>
+      <div class="kv"><span class="kv-l">乖離率（對季線）</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">+4.45%</span><span class="kv-sub">＞15% 過熱</span></span></div>
+      <div class="kv"><span class="kv-l">KD（K / D）</span><span class="kv-r"><span class="kv-v" style="color:#cf6a2a">32.6 / 40.8</span><span class="kv-sub">＞80 超買</span></span></div>
+      <div class="kv"><span class="kv-l">MACD 柱狀 OSC</span><span class="kv-r"><span class="kv-v" style="color:#1f8a55">-125</span></span></div>
+    </div>
+
+    <div class="card panel rise" style="animation-delay:0.54s">
+      <h3><span class="dot" style="background:#c4453f"></span>基本面動能</h3>
+      <div class="kv"><span class="kv-l">全市場月營收 YoY</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">+50.9%</span><span class="kv-sub">資料月 202608 · 涵蓋 1971 家</span></span></div>
+      <div class="kv"><span class="kv-l">非台積電 月營收 YoY</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">+50.6%</span></span></div>
+      <div class="kv"><span class="kv-l">Forward PE（機構估）</span><span class="kv-r"><span class="kv-v" style="color:#242a32">21.1 倍</span></span></div>
+      <div class="pb-hint">營收口徑為全市場個股由下而上加總；採最近一個涵蓋率達標的完整月份。</div>
+    </div>
+
+    <div class="card panel rise" style="animation-delay:0.60s">
+      <h3><span class="dot" style="background:#cf6a2a"></span>總經國際</h3>
+      <div class="kv"><span class="kv-l">費城半導體 SOX</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">11,922</span><span class="kv-sub">+2.78%</span></span></div>
+      <div class="kv"><span class="kv-l">台積電 ADR（前夜）</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">435 美元</span><span class="kv-sub">+1.02%（開盤領先訊號）</span></span></div>
+      <div class="kv"><span class="kv-l">VIX 恐慌指數</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">14.8</span></span></div>
+      <div class="kv"><span class="kv-l">美元／台幣</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">31.76</span><span class="kv-sub">台幣升＝偏多 · -0.28%</span></span></div>
+      <div class="kv"><span class="kv-l">美債 10 年 / 利差(10Y−2Y)</span><span class="kv-r"><span class="kv-v" style="color:#bd8a1c">5.01% / +0.27%</span></span></div>
+      <div class="kv"><span class="kv-l">量能（成交值）</span><span class="kv-r"><span class="kv-v" style="color:#c4453f">13,398 億</span><span class="kv-sub">對 20 日均 +27.5% · 87 分位</span></span></div>
+      <div class="kv"><span class="kv-l">融資維持率 / 當沖比</span><span class="kv-r"><span class="kv-v" style="color:#bd8a1c">—% / 35%</span></span></div>
+    </div>
+  </section>
+
+  <section class="bb">
+    <div class="card col rise" style="animation-delay:0.66s"><h3 style="color:#c4453f">多方論點 · Bull</h3><ul class="bull"><li>基本面動能強：全市場月營收年增 +50.9%（非台積 +50.6%）</li><li>指數仍在年線之上，長多結構未破</li><li>費半收漲 +2.8%，外圍科技氛圍偏暖</li><li>機構估明年獲利成長，Forward PE 降至 21.1 倍（低於近四季 25 倍）</li></ul></div>
+    <div class="card col rise" style="animation-delay:0.72s"><h3 style="color:#1f8a55">空方論點 · Bear</h3><ul class="bear"><li>估值昂貴：市值加權 PE 25 倍、殖利率僅 1.63%，安全邊際薄</li><li>當沖佔比 35% 偏高，散戶投機熱度警訊</li><li>台積電權重 41.4%、前五大 53%，指數高度集中、個股風險難分散</li></ul></div>
+  </section>
+
+  <footer class="card foot rise" style="animation-delay:0.78s">
+    <h3>驗證軌跡與資料品質</h3>
+    <div>整體判斷信心度：<span class="conf">混合 nowcast · 75/100</span>
+      　指數／官方法人／估值＝實證高信心；總經為即時報價；綜合分為當下定性，非未來預測。</div>
+    <div style="margin-top:7px">質性層（Claude 研判）：<span class="conf">信心 72/100</span>　來源 12 家 · 搜尋 9 次 · 正 2／反 3 視角　生成 2026-09-18 11:52 (+0800)　｜　錨點：C:\TWSE_Dashboard\taiex_state.json（基準日 20260916，build 2026-09-18 06:21；資料源 CMoney 台股DATABASE2026.xlsb＋TWSE BFI82U＋TPEx＋FMTQIK＋Yahoo＋FMP）、CNBC 2026-09-16〈Fed rate decision September 2026: Rates rise to 3.75%-4%〉（12 比 0 升息 1 碼，2023 年 7 月來首次）、Fox Business 2026-09-16〈September FOMC: Federal Reserve hikes interest rates for first time since 2023〉、Yahoo Finance 2026-09-16〈Fed hikes interest rates by 25 basis points as Warsh vows 'timelier return' to 2% inflation〉（點陣圖 16/18 預期再升）、中央社 CNA 2026-09-17〈台股終場上漲439點站回月線 塑化、光通訊股強勢〉（收 46,288 點、成交 8,194.05 億元）、經濟日報 2026-09-17〈台積電漲45元 台股終場漲439點收46288點〉、經濟日報 2026-09-17〈台股盤中漲逾千點站回月線 塑化光通訊走強〉（盤中最高 46,874.84 點）、Newtalk 新聞 2026-09-17〈央行理監事會》利率連10凍！今年GDP上修至11.48% 房市管制再鬆綁「二房貸款升至7成」〉、壹蘋新聞網 2026-09-17〈央行利率連10凍！房市信用管制放鬆 第2戶貸款成數上限升至7成〉、工商時報 2026-09-17〈9月底中秋節及教師節連假 台股一連休市四天〉（9/25～9/28 休市）、Yahoo 股市 2026-09-18〈台積電領軍攻高 台股早盤漲逾800點站上46700點〉（台積電 2,440 元）、永豐豐雲學堂 2026-09〈2026年9月台美股行事曆：SEMICON 半導體展、FED 利率決策撞四巫日、台股法說營收季底作帳〉</div>
+    <div class="srcgrid">
+      <div class="src">📦 結構數據　<b>CMoney 台股DATABASE2026.xlsb (基準日 20260918)</b></div>
+      <div class="src">🏛️ 官方籌碼　<b>TWSE BFI82U + TPEx insti/summary</b></div>
+      <div class="src">📈 指數／總經　<b>TWSE FMTQIK(主)→openapi→FinMind(非twse備援) · Yahoo · FMP(ADR/美債)</b></div>
+      <div class="src">💱 匯率系統　<b>已接入</b></div>
+    </div>
+    <div class="warn">口徑須知：庫內彙總為「個股口徑」（不含 ETF），故與官方總量有差（外資個股 <b>1,034</b> 億 vs 官方 <b>1,085</b> 億，缺口為 ETF 流量）——官方面板採 TWSE／TPEx 端，z 值與流向廣度採庫內 721 日序列，兩者分欄不混淆。市值加權本益比與官方大盤本益比基礎不同。大戶數據為週頻、報價分頁為盤中 DDE 離線不可用。資料每日重跑 build_state_taiex.py 後更新。</div>
+  </footer>
+
+</div></body></html>
