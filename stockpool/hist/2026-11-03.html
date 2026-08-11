@@ -1,0 +1,156 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><script>window.__SNAP={"hist": "", "root": "../", "cur": "2026-11-03", "nav": "banner", "chunks": false};</script>
+<script>(function(){
+ var S=window.__SNAP;
+ window.__nofetch=function(){return Promise.reject(new Error('static'))};
+ window.__snapText=function(u){return fetch(u,{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.arrayBuffer()})
+  .then(function(a){var b=new Uint8Array(a);return (b[0]===31&&b[1]===139&&window.DecompressionStream)?
+   new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).text():new TextDecoder().decode(b)})};
+ window.__snapGo=function(v){location.href=v?S.hist+v+'.html':S.root};
+ function opts(ds,blank){return (blank===null?'':'<option value="">'+blank+'</option>')+
+  ds.slice().reverse().map(function(d){return '<option value="'+d+'">'+d+'</option>'}).join('')}
+ function init(){
+  if(S.nav!=='select'&&S.nav!=='banner')return;
+  fetch(S.hist+'index.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null}).then(function(j){
+   var ds=(j&&j.dates)||[];if(!ds.length)return;
+   if(S.nav==='select'){
+    document.querySelectorAll('select[data-snapsel]').forEach(function(el){
+     var b=el.querySelector('option[value=""]');el.innerHTML=opts(ds,b?b.textContent:null);
+     el.value=(S.cur&&ds.indexOf(S.cur)>=0)?S.cur:(b?'':ds[ds.length-1])});
+   }else{
+    var bn=document.getElementById('__snap_banner');if(!bn)return;
+    var w=document.createElement('span');w.style.cssText='margin-left:14px;white-space:nowrap';
+    w.innerHTML='📅 切換日期 <select style="font-size:12px;padding:1px 4px;background:#262a33;color:#e6e9ef;border:1px solid #3a3f4a;border-radius:4px">'+opts(ds,'最新快照')+'</select>';
+    var sel=w.querySelector('select');sel.value=(S.cur&&ds.indexOf(S.cur)>=0)?S.cur:'';
+    sel.onchange=function(){window.__snapGo(this.value)};
+    var line=bn.querySelector('.__snap_line');(line||bn).appendChild(w);
+   }}).catch(function(){})}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();</script>
+<!--__m_begin--><style id="__m_base">
+@media (max-width:760px){
+ #__snap_banner{padding:7px 12px!important;font-size:12.5px!important;line-height:1.45!important}
+ #__snap_banner .__snap_desc{display:none}
+ #__snap_banner .__snap_line>span{margin-left:8px!important}
+ #__snap_banner>div{font-size:10px!important;margin-top:2px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #__snap_banner select{font-size:13px!important;padding:3px 6px!important;max-width:150px}
+}
+</style>
+<!--__m_end-->
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>StockPool 儀錶板</title>
+<style>
+:root{--bg:#0f1218;--pn:#181d26;--ln:#2a3140;--tx:#e6e9ef;--mu:#8b95a7;--g:#2ea86b;--y:#d9a21b;--r:#d9534f;--n:#5c6678}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 "Microsoft JhengHei","PingFang TC",system-ui,sans-serif;padding:16px}
+h2{font-size:16px;margin:22px 0 8px;border-left:4px solid var(--g);padding-left:8px}
+.bn{padding:14px 16px;border-radius:10px;font-weight:700}.bn.ok{background:#173d2a;border:1px solid var(--g)}
+.bn.warn{background:#3d3214;border:1px solid var(--y)}.bn.bad{background:#4a1b1b;border:1px solid var(--r)}
+.bn .s{font-weight:400;font-size:13px;color:var(--mu);margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.kv{background:var(--pn);border:1px solid var(--ln);border-radius:8px;padding:8px 10px}.kv i{display:block;font-style:normal;color:var(--mu);font-size:12px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin:0 3px 0 10px;vertical-align:middle}
+.dot.ok{background:var(--g)}.dot.warn{background:var(--y)}.dot.fail{background:var(--r)}small{color:var(--mu)}
+.tw{overflow-x:auto;border:1px solid var(--ln);border-radius:8px}table{border-collapse:collapse;width:100%;white-space:nowrap;font-size:13px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--ln)}th{background:#1f2633;position:sticky;top:0;text-align:left;color:var(--mu);font-weight:600}
+td.n{text-align:right;font-variant-numeric:tabular-nums}td.c{font-weight:700}.up{color:#ff6b6b}.dn{color:#4cd98a}
+tr.k0{background:rgba(46,168,107,.08)}tr.k2 td{color:#b9c0cc}
+.b{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700;color:#fff}.b.g{background:var(--g)}.b.n{background:var(--n)}.b.r{background:var(--r)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.card{background:var(--pn);border:1px solid var(--g);border-radius:10px;padding:10px 12px}.ct{display:flex;justify-content:space-between}
+.cr{color:var(--y);font-size:13px}.rs{color:var(--mu);font-size:13px;margin-top:4px}.muted{color:var(--mu)}
+footer{margin-top:24px;color:var(--mu);font-size:12px;word-break:break-all}
+</style></head><body><div id="__snap_banner" style="font-family:system-ui,'Noto Sans TC',sans-serif;
+ background:#1a1d24;color:#c8cdd6;padding:10px 16px;font-size:13px;line-height:1.6;
+ border-bottom:2px solid #FF8C00">
+<span class="__snap_line"><b style="color:#FF8C00">StockPool 評級</b> — 歷史快照 <b>2026-11-03</b>（擷取 2026-11-03 08:04 (UTC+8)）&nbsp;｜&nbsp;<a href="../" style="color:#7fc4ff">回最新快照</a></span>
+<div style="color:#8a9099;font-size:11px;margin-top:3px">本頁為延遲快照，僅供個人研究參考，不構成任何投資建議或要約。資料可能有誤或過時，使用者應自行查證。</div>
+</div>
+
+<div class="bn ok">FRESH — 資料為最新交易日
+<div class="s">資料日期 2026-11-02|預期交易日 2026-11-02|產出 2026-11-03 08:04:38|外資彙總日 20261102</div></div>
+<h2>更新健康</h2><div class="grid">
+<div class="kv"><i>ok</i>True</div>
+<div class="kv"><i>mode</i>直讀 (pyxlsb-direct)</div>
+<div class="kv"><i>來源檔 mtime</i>2026-11-03 04:15:39</div>
+<div class="kv"><i>檔數 / 欄數</i>66 / 178</div>
+<div class="kv"><i>fallbackReason</i>—</div>
+<div class="kv"><i>error</i>—</div></div>
+<p>最近 7 次:<span class="dot warn" title="2026-10-26 WARN"></span><small>10-26</small><span class="dot ok" title="2026-10-27 OK"></span><small>10-27</small><span class="dot ok" title="2026-10-28 OK"></span><small>10-28</small><span class="dot ok" title="2026-10-29 OK"></span><small>10-29</small><span class="dot ok" title="2026-10-30 OK"></span><small>10-30</small><span class="dot ok" title="2026-11-02 OK"></span><small>11-02</small><span class="dot ok" title="2026-11-03 OK"></span><small>11-03</small></p>
+<h2>重點關注 — 接近進場條件(9 檔)</h2><div class="cards"><div class="card"><div class="ct"><b>3680 家登</b><span>0.00(-0.7%)</span></div><div class="cr">⭐ 留意</div><div class="rs">加權總分 15.4/27;🎯 進場區-量縮健康;距進場價 -100.0%;🟢外資投信雙買;🔴跌破MA20;警示:破線警示⚠、反轉確認⚠;21日 -10.8%</div></div>
+<div class="card"><div class="ct"><b>3443 創意</b><span>7,285.00(-4.6%)</span></div><div class="cr">⭐ 留意</div><div class="rs">加權總分 15.2/27;🎯 進場區;距進場價 -17.0%;🟢外資投信雙買;🔴跌破MA20;警示:破線警示⚠;21日 -8.1%</div></div>
+<div class="card"><div class="ct"><b>3042 晶技</b><span>163.00(-0.3%)</span></div><div class="cr">⭐ 留意</div><div class="rs">加權總分 15.1/27;🎯 進場區-量縮健康;距進場價 -12.6%;🟢外資投信雙買;🔴跌破MA20;警示:破線警示⚠、反轉確認⚠;21日 -21.8%</div></div>
+<div class="card"><div class="ct"><b>6414 樺漢</b><span>368.00(-1.3%)</span></div><div class="cr">⭐ 留意</div><div class="rs">加權總分 14.2/27;🎯 進場區-量縮健康;距進場價 -7.6%;🟢外資投信雙買;🔴跌破MA20;警示:反轉確認⚠;21日 -7.5%</div></div>
+<div class="card"><div class="ct"><b>2313 華通</b><span>205.00(+1.5%)</span></div><div class="cr">⭐ 留意</div><div class="rs">加權總分 10.4/27;🎯 進場區-量縮健康;距進場價 -9.7%;🟢外資投信雙買;🔴跌破MA20;警示:破線警示⚠、反轉確認⚠;21日 -9.3%</div></div>
+<div class="card"><div class="ct"><b>2395 研華</b><span>655.00(-3.7%)</span></div><div class="cr">⭐ 留意</div><div class="rs">加權總分 10.4/27;🎯 進場區;距進場價 -4.4%;🟢外資投信雙買;🔴跌破MA20;警示:破線警示⚠、反轉確認⚠;21日 -10.3%</div></div>
+<div class="card"><div class="ct"><b>6223 旺矽</b><span>4,655.00(+1.0%)</span></div><div class="cr">⭐ 留意</div><div class="rs">加權總分 9.9/27;🎯 進場區-量縮健康;距進場價 -15.3%;🟢外資投信雙買;🔴跌破MA20;警示:破線警示⚠、反轉確認⚠;21日 -10.2%</div></div>
+<div class="card"><div class="ct"><b>2377 微星</b><span>156.50(-0.6%)</span></div><div class="cr">⭐ 留意</div><div class="rs">加權總分 9.2/27;🎯 進場區-量縮健康;距進場價 +2.1%;🟢外資投信雙買;🔴跌破MA20;警示:無;21日 +3.6%</div></div>
+<div class="card"><div class="ct"><b>2618 長榮航</b><span>43.15(+1.1%)</span></div><div class="cr">⭐⭐ 觀察候補</div><div class="rs">加權總分 8.2/27;🎯 進場區-量縮健康;距進場價 +1.9%;🔵外資買進;🟢強勢(MA20/60上方);警示:無;21日 +4.0%</div></div></div>
+<h2>股票池總覽(66 檔:接近進場 9/觀察中 10/轉弱 47)</h2>
+<div class="tw"><table><thead><tr><th>評級</th><th>代號</th><th>名稱</th><th>收盤價</th><th>漲幅%</th><th>21日%</th><th>加權總分</th><th>警示分</th><th>進場價</th><th>距進場價%</th><th>進場狀態</th><th>法人訊號</th><th>技術訊號</th><th>綜合評等</th></tr></thead>
+<tbody><tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">3680</td><td>家登</td><td class="n">0.00</td><td class="n dn">-0.7%</td><td class="n dn">-10.8%</td><td class="n">15.4</td><td class="n">5</td><td class="n">508.46</td><td class="n">-100.0%</td><td>🎯 進場區-量縮健康</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">3443</td><td>創意</td><td class="n">7,285.00</td><td class="n dn">-4.6%</td><td class="n dn">-8.1%</td><td class="n">15.2</td><td class="n">2</td><td class="n">8,781.93</td><td class="n">-17.0%</td><td>🎯 進場區</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">3042</td><td>晶技</td><td class="n">163.00</td><td class="n dn">-0.3%</td><td class="n dn">-21.8%</td><td class="n">15.1</td><td class="n">5</td><td class="n">186.43</td><td class="n">-12.6%</td><td>🎯 進場區-量縮健康</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">6414</td><td>樺漢</td><td class="n">368.00</td><td class="n dn">-1.3%</td><td class="n dn">-7.5%</td><td class="n">14.2</td><td class="n">3</td><td class="n">398.48</td><td class="n">-7.6%</td><td>🎯 進場區-量縮健康</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">2313</td><td>華通</td><td class="n">205.00</td><td class="n up">+1.5%</td><td class="n dn">-9.3%</td><td class="n">10.4</td><td class="n">5</td><td class="n">227.09</td><td class="n">-9.7%</td><td>🎯 進場區-量縮健康</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">2395</td><td>研華</td><td class="n">655.00</td><td class="n dn">-3.7%</td><td class="n dn">-10.3%</td><td class="n">10.4</td><td class="n">5</td><td class="n">685.07</td><td class="n">-4.4%</td><td>🎯 進場區</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">6223</td><td>旺矽</td><td class="n">4,655.00</td><td class="n up">+1.0%</td><td class="n dn">-10.2%</td><td class="n">9.9</td><td class="n">5</td><td class="n">5,496.83</td><td class="n">-15.3%</td><td>🎯 進場區-量縮健康</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">2377</td><td>微星</td><td class="n">156.50</td><td class="n dn">-0.6%</td><td class="n up">+3.6%</td><td class="n">9.2</td><td class="n">0</td><td class="n">153.34</td><td class="n">+2.1%</td><td>🎯 進場區-量縮健康</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k0"><td><span class="b g">接近進場條件</span></td><td class="c">2618</td><td>長榮航</td><td class="n">43.15</td><td class="n up">+1.1%</td><td class="n up">+4.0%</td><td class="n">8.2</td><td class="n">0</td><td class="n">42.34</td><td class="n">+1.9%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🟢強勢(MA20/60上方)</td><td>⭐⭐ 觀察候補</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">2317</td><td>鴻海</td><td class="n">251.00</td><td class="n up">+2.2%</td><td class="n up">+0.2%</td><td class="n">15.2</td><td class="n">0</td><td class="n">157.70</td><td class="n">+59.2%</td><td>⏳ 等拉回</td><td>🔵投信買進</td><td>🟢強勢(MA20/60上方)</td><td>⭐ 留意</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">3231</td><td>緯創</td><td class="n">181.50</td><td class="n dn">-1.1%</td><td class="n dn">-2.2%</td><td class="n">12.5</td><td class="n">3</td><td class="n">93.60</td><td class="n">+93.9%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">2027</td><td>大成鋼</td><td class="n">50.30</td><td class="n up">+0.2%</td><td class="n up">+6.7%</td><td class="n">11.3</td><td class="n">0</td><td class="n">48.54</td><td class="n">+3.6%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>⚪️整理</td><td>⭐ 留意</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">2379</td><td>瑞昱</td><td class="n">785.00</td><td class="n dn">-2.2%</td><td class="n up">+3.3%</td><td class="n">10.7</td><td class="n">0</td><td class="n">733.45</td><td class="n">+7.0%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>🟢強勢(MA20/60上方)</td><td>⭐⭐ 觀察候補</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">3533</td><td>嘉澤</td><td class="n">1,820.00</td><td class="n dn">-2.1%</td><td class="n up">+6.4%</td><td class="n">9.7</td><td class="n">0</td><td class="n">1,756.83</td><td class="n">+3.6%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>🔴跌破MA20</td><td>⭐ 留意</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">2885</td><td>元大金</td><td class="n">71.50</td><td class="n dn">-1.5%</td><td class="n up">+4.1%</td><td class="n">9.3</td><td class="n">0</td><td class="n">68.28</td><td class="n">+4.7%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>⚪️整理</td><td>⭐ 留意</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">2882</td><td>國泰金</td><td class="n">116.00</td><td class="n ">+0.0%</td><td class="n up">+4.0%</td><td class="n">8.7</td><td class="n">0</td><td class="n">108.64</td><td class="n">+6.8%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>🟢強勢(MA20/60上方)</td><td>⭐⭐ 觀察候補</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">2881</td><td>富邦金</td><td class="n">159.50</td><td class="n dn">-1.2%</td><td class="n up">+5.3%</td><td class="n">8.7</td><td class="n">0</td><td class="n">146.56</td><td class="n">+8.8%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>🟢強勢(MA20/60上方)</td><td>⭐⭐ 觀察候補</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">2882</td><td>國泰金</td><td class="n">116.00</td><td class="n ">+0.0%</td><td class="n up">+4.0%</td><td class="n">8.7</td><td class="n">0</td><td class="n">108.64</td><td class="n">+6.8%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>🟢強勢(MA20/60上方)</td><td>⭐⭐ 觀察候補</td></tr>
+<tr class="k1"><td><span class="b n">觀察中</span></td><td class="c">2891</td><td>中信金</td><td class="n">75.00</td><td class="n dn">-1.1%</td><td class="n up">+9.2%</td><td class="n">6.8</td><td class="n">0</td><td class="n">68.50</td><td class="n">+9.5%</td><td>⏳ 等拉回</td><td>🟢外資投信雙買</td><td>🟢強勢(MA20/60上方)</td><td>⭐⭐ 觀察候補</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">4938</td><td>和碩</td><td class="n">102.50</td><td class="n ">+0.0%</td><td class="n up">+12.9%</td><td class="n">20.3</td><td class="n">0</td><td class="n">93.23</td><td class="n">+9.9%</td><td>⏳ 等拉回</td><td>🔵外資買進</td><td>⚪️整理</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2408</td><td>南亞科</td><td class="n">456.50</td><td class="n up">+0.4%</td><td class="n dn">-9.8%</td><td class="n">18.2</td><td class="n">5</td><td class="n">494.08</td><td class="n">-7.6%</td><td>🎯 進場區-量縮健康</td><td>🔴外資投信雙賣</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2344</td><td>華邦電</td><td class="n">162.00</td><td class="n dn">-1.5%</td><td class="n dn">-6.9%</td><td class="n">18.2</td><td class="n">5</td><td class="n">172.53</td><td class="n">-6.1%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">6669</td><td>緯穎</td><td class="n">1,820.00</td><td class="n up">+0.6%</td><td class="n dn">-13.3%</td><td class="n">17.7</td><td class="n">5</td><td class="n">2,150.40</td><td class="n">-15.4%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3037</td><td>欣興</td><td class="n">997.00</td><td class="n up">+0.8%</td><td class="n dn">-14.4%</td><td class="n">17.0</td><td class="n">5</td><td class="n">1,073.15</td><td class="n">-7.1%</td><td>🎯 進場區</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">1560</td><td>中砂</td><td class="n">864.00</td><td class="n dn">-0.3%</td><td class="n dn">-9.6%</td><td class="n">16.8</td><td class="n">2</td><td class="n">811.53</td><td class="n">+6.5%</td><td>⏳ 等拉回</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">8046</td><td>南電</td><td class="n">1,185.00</td><td class="n dn">-0.4%</td><td class="n dn">-6.7%</td><td class="n">16.8</td><td class="n">3</td><td class="n">1,225.83</td><td class="n">-3.3%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">6213</td><td>聯茂</td><td class="n">656.00</td><td class="n dn">-4.5%</td><td class="n up">+5.8%</td><td class="n">16.6</td><td class="n">0</td><td class="n">590.63</td><td class="n">+11.1%</td><td>⏳ 等拉回</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">6213</td><td>聯茂</td><td class="n">656.00</td><td class="n dn">-4.5%</td><td class="n up">+5.8%</td><td class="n">16.6</td><td class="n">0</td><td class="n">590.63</td><td class="n">+11.1%</td><td>⏳ 等拉回</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">6510</td><td>精測</td><td class="n">2,850.00</td><td class="n up">+1.1%</td><td class="n dn">-9.2%</td><td class="n">15.8</td><td class="n">5</td><td class="n">3,081.58</td><td class="n">-7.5%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">8299</td><td>群聯</td><td class="n">1,875.00</td><td class="n dn">-2.9%</td><td class="n dn">-11.3%</td><td class="n">14.4</td><td class="n">5</td><td class="n">2,038.08</td><td class="n">-8.0%</td><td>🎯 進場區</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3189</td><td>景碩</td><td class="n">910.00</td><td class="n dn">-2.4%</td><td class="n dn">-4.7%</td><td class="n">14.2</td><td class="n">0</td><td class="n">902.33</td><td class="n">+0.9%</td><td>🎯 進場區</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3081</td><td>聯亞</td><td class="n">2,415.00</td><td class="n up">+1.9%</td><td class="n dn">-8.9%</td><td class="n">14.1</td><td class="n">5</td><td class="n">2,778.92</td><td class="n">-13.1%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2049</td><td>上銀</td><td class="n">321.50</td><td class="n dn">-1.5%</td><td class="n dn">-4.2%</td><td class="n">14.1</td><td class="n">5</td><td class="n">344.06</td><td class="n">-6.6%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">7711</td><td>永擎</td><td class="n">544.00</td><td class="n dn">-0.7%</td><td class="n dn">-0.4%</td><td class="n">13.6</td><td class="n">0</td><td class="n">533.42</td><td class="n">+2.0%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">5274</td><td>信驊</td><td class="n">15,625.00</td><td class="n dn">-2.2%</td><td class="n dn">-19.4%</td><td class="n">13.3</td><td class="n">5</td><td class="n">17,355.42</td><td class="n">-10.0%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3017</td><td>奇鋐</td><td class="n">3,060.00</td><td class="n dn">-1.1%</td><td class="n dn">-10.0%</td><td class="n">13.3</td><td class="n">5</td><td class="n">3,225.32</td><td class="n">-5.1%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3005</td><td>神基</td><td class="n">124.00</td><td class="n up">+0.8%</td><td class="n up">+6.0%</td><td class="n">13.1</td><td class="n">0</td><td class="n">117.76</td><td class="n">+5.3%</td><td>⏳ 等拉回</td><td>🔵外資買進</td><td>⚪️整理</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">6274</td><td>台燿</td><td class="n">1,210.00</td><td class="n dn">-4.3%</td><td class="n dn">-18.5%</td><td class="n">12.9</td><td class="n">5</td><td class="n">1,492.00</td><td class="n">-18.9%</td><td>🎯 進場區</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3374</td><td>精材</td><td class="n">471.50</td><td class="n dn">-3.4%</td><td class="n up">+3.6%</td><td class="n">12.9</td><td class="n">2</td><td class="n">414.97</td><td class="n">+13.6%</td><td>⏳ 等拉回</td><td>🔴外資投信雙賣</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">6187</td><td>萬潤</td><td class="n">1,195.00</td><td class="n up">+0.4%</td><td class="n dn">-8.8%</td><td class="n">12.7</td><td class="n">3</td><td class="n">1,301.25</td><td class="n">-8.2%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2376</td><td>技嘉</td><td class="n">339.50</td><td class="n up">+1.0%</td><td class="n dn">-6.2%</td><td class="n">12.2</td><td class="n">5</td><td class="n">355.93</td><td class="n">-4.6%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2383</td><td>台光電</td><td class="n">4,705.00</td><td class="n up">+0.6%</td><td class="n dn">-4.4%</td><td class="n">12.2</td><td class="n">5</td><td class="n">5,358.70</td><td class="n">-12.2%</td><td>🎯 進場區</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">1717</td><td>長興</td><td class="n">66.70</td><td class="n up">+1.7%</td><td class="n dn">-8.0%</td><td class="n">12.2</td><td class="n">7</td><td class="n">72.30</td><td class="n">-7.7%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2327</td><td>國巨*</td><td class="n">498.50</td><td class="n dn">-0.7%</td><td class="n dn">-9.0%</td><td class="n">12.2</td><td class="n">5</td><td class="n">568.46</td><td class="n">-12.3%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2345</td><td>智邦</td><td class="n">1,615.00</td><td class="n ">+0.0%</td><td class="n dn">-10.8%</td><td class="n">11.9</td><td class="n">5</td><td class="n">2,012.33</td><td class="n">-19.7%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2360</td><td>致茂</td><td class="n">1,715.00</td><td class="n dn">-2.3%</td><td class="n dn">-21.5%</td><td class="n">11.4</td><td class="n">5</td><td class="n">2,121.58</td><td class="n">-19.2%</td><td>🎯 進場區</td><td>🔴外資投信雙賣</td><td>🔴跌破MA20</td><td>❌ 移除</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3406</td><td>玉晶光</td><td class="n">1,035.00</td><td class="n dn">-4.6%</td><td class="n up">+17.4%</td><td class="n">11.4</td><td class="n">0</td><td class="n">912.15</td><td class="n">+13.5%</td><td>⏳ 等拉回</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">4958</td><td>臻鼎-KY</td><td class="n">487.00</td><td class="n up">+0.2%</td><td class="n dn">-2.3%</td><td class="n">11.3</td><td class="n">3</td><td class="n">503.15</td><td class="n">-3.2%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3665</td><td>貿聯-KY</td><td class="n">1,625.00</td><td class="n ">+0.0%</td><td class="n dn">-33.5%</td><td class="n">11.2</td><td class="n">5</td><td class="n">2,141.75</td><td class="n">-24.1%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">4979</td><td>華星光</td><td class="n">426.00</td><td class="n dn">-4.7%</td><td class="n dn">-24.9%</td><td class="n">11.0</td><td class="n">5</td><td class="n">549.44</td><td class="n">-22.5%</td><td>⚠ 進場區-爆量下殺暫緩</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2382</td><td>廣達</td><td class="n">318.00</td><td class="n ">+0.0%</td><td class="n dn">-5.5%</td><td class="n">10.5</td><td class="n">5</td><td class="n">140.60</td><td class="n">+126.2%</td><td>⏳ 等拉回</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2059</td><td>川湖</td><td class="n">9,420.00</td><td class="n dn">-2.4%</td><td class="n dn">-22.2%</td><td class="n">10.2</td><td class="n">5</td><td class="n">12,027.47</td><td class="n">-21.7%</td><td>🎯 進場區-量縮健康</td><td>🔴外資投信雙賣</td><td>🔴跌破MA20</td><td>❌ 移除</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">6515</td><td>穎崴</td><td class="n">4,485.00</td><td class="n dn">-1.8%</td><td class="n dn">-21.0%</td><td class="n">9.9</td><td class="n">5</td><td class="n">6,125.00</td><td class="n">-26.8%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">6488</td><td>環球晶</td><td class="n">760.00</td><td class="n up">+0.5%</td><td class="n dn">-19.6%</td><td class="n">9.8</td><td class="n">7</td><td class="n">956.30</td><td class="n">-20.5%</td><td>🎯 進場區-量縮健康</td><td>🔴外資投信雙賣</td><td>🔴跌破MA20</td><td>❌ 移除</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2330</td><td>台積電</td><td class="n">2,330.00</td><td class="n dn">-1.7%</td><td class="n dn">-5.9%</td><td class="n">8.6</td><td class="n">5</td><td class="n">418.50</td><td class="n">+456.8%</td><td>⏳ 等拉回</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2368</td><td>金像電</td><td class="n">1,060.00</td><td class="n up">+3.9%</td><td class="n dn">-5.4%</td><td class="n">8.2</td><td class="n">3</td><td class="n">1,084.37</td><td class="n">-2.2%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2393</td><td>億光</td><td class="n">66.50</td><td class="n dn">-1.0%</td><td class="n up">+4.6%</td><td class="n">7.7</td><td class="n">0</td><td class="n">65.01</td><td class="n">+2.3%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3583</td><td>辛耘</td><td class="n">562.00</td><td class="n dn">-0.3%</td><td class="n dn">-21.2%</td><td class="n">7.3</td><td class="n">5</td><td class="n">696.72</td><td class="n">-19.3%</td><td>🎯 進場區-量縮健康</td><td>🔴外資投信雙賣</td><td>🔴跌破MA20</td><td>❌ 移除</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3491</td><td>昇達科</td><td class="n">1,300.00</td><td class="n up">+3.6%</td><td class="n dn">-13.9%</td><td class="n">6.8</td><td class="n">5</td><td class="n">1,406.75</td><td class="n">-7.6%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2454</td><td>聯發科</td><td class="n">3,970.00</td><td class="n up">+1.4%</td><td class="n dn">-19.1%</td><td class="n">6.6</td><td class="n">5</td><td class="n">2,650.22</td><td class="n">+49.8%</td><td>⏳ 等拉回</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2308</td><td>台達電</td><td class="n">1,355.00</td><td class="n up">+1.5%</td><td class="n dn">-26.2%</td><td class="n">6.4</td><td class="n">7</td><td class="n">1,116.45</td><td class="n">+21.4%</td><td>⏳ 等拉回</td><td>🔴外資投信雙賣</td><td>🔴跌破MA20</td><td>❌ 移除</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3008</td><td>大立光</td><td class="n">5,490.00</td><td class="n up">+1.1%</td><td class="n dn">-8.8%</td><td class="n">4.6</td><td class="n">5</td><td class="n">6,088.53</td><td class="n">-9.8%</td><td>🎯 進場區-量縮健康</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2301</td><td>光寶科</td><td class="n">243.50</td><td class="n up">+1.2%</td><td class="n dn">-13.4%</td><td class="n">4.6</td><td class="n">5</td><td class="n">277.71</td><td class="n">-12.3%</td><td>🎯 進場區</td><td>🔵投信買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">8033</td><td>雷虎</td><td class="n">154.00</td><td class="n dn">-1.6%</td><td class="n dn">-8.9%</td><td class="n">4.3</td><td class="n">7</td><td class="n">174.63</td><td class="n">-11.8%</td><td>🎯 進場區-量縮健康</td><td>🔴外資投信雙賣</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">2645</td><td>長榮航太</td><td class="n">165.50</td><td class="n ">+0.0%</td><td class="n dn">-3.8%</td><td class="n">1.8</td><td class="n">5</td><td class="n">175.43</td><td class="n">-5.7%</td><td>🎯 進場區-量縮健康</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr>
+<tr class="k2"><td><span class="b r">訊號轉弱</span></td><td class="c">3026</td><td>禾伸堂</td><td class="n">637.00</td><td class="n dn">-9.9%</td><td class="n dn">-20.0%</td><td class="n"></td><td class="n"></td><td class="n">729.53</td><td class="n">-12.7%</td><td>🎯 進場區</td><td>🔵外資買進</td><td>🔴跌破MA20</td><td>⚠️ 警示</td></tr></tbody></table></div>
+<footer>耗時 5 秒(routine 啟動 08:04:34)|log:C:\XlsbUpdater\files\stockpool\logs\daily_run.log<br>
+資料來源:D:\fileserver\書業(新)\Julia\0更新捷徑\XQ.xlsb 分頁 StockPool → C:\XlsbUpdater\files\stockpool\data\StockPool.csv|評級規則:config.md 分析評估規則 v2</footer>
+</body></html>
