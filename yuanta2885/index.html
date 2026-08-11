@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang='zh-Hant'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1.0'><meta http-equiv='refresh' content='600'><title>元大金 2885 決策儀表板 2026-08-22</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'PingFang TC','Microsoft JhengHei',-apple-system,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:14px}
+.hd{padding:6px 4px 12px}.hd-t{font-size:15px;color:#475569;font-weight:600}
+.hd-row{display:flex;justify-content:space-between;align-items:center}
+.btn{font-size:12.5px;font-weight:700;color:#0369a1;background:#e0f2fe;border:1px solid #7dd3fc;border-radius:8px;padding:5px 11px;text-decoration:none}
+.btn:active{background:#bae6fd}
+.hd-i{font-size:11.5px;color:#0369a1;margin-top:2px}
+.errbn{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;font-size:12px;border-radius:8px;padding:7px 10px;margin-bottom:8px}
+.hd-p{font-size:34px;font-weight:800}.hd-c{font-size:15px;color:#16a34a;font-weight:600}
+.hd-d{font-size:12px;color:#64748b;margin-top:2px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:11px}
+.hero{border:2px solid #cbd5e1}
+.tgt{border:2px solid #0ea5e9;background:#f0f9ff}
+.hero-top{font-size:15px;font-weight:800;margin-bottom:10px}
+.lights{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:8px;text-align:center}
+.light,.verdict{background:#f8fafc;border-radius:10px;padding:10px 6px}
+.verdict{background:#0f172a}.v-lab{color:#94a3b8;font-size:12px}
+.l-lab{font-size:12px;color:#64748b}.l-big{font-size:19px;font-weight:800;margin:3px 0}
+.l-conf{font-size:11px;color:#94a3b8}
+.v-big{font-size:24px;font-weight:900;margin:3px 0}.v-up{font-size:11px;color:#cbd5e1}
+.notes{margin:11px 0 4px;font-size:12.5px;color:#334155}.notes div{margin:3px 0}
+.levels{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.lv{flex:1;min-width:90px;background:#f8fafc;border-radius:8px;padding:7px;text-align:center}
+.lv span{font-size:11px;color:#64748b;display:block}.lv b{font-size:15px}
+.lv-sl b{color:#dc2626}
+.sec{font-size:14px;font-weight:700;margin-bottom:9px}
+.g-row{display:flex;align-items:center;gap:8px;margin:13px 0}
+.g-lab{width:84px;font-size:12.5px;color:#475569;flex-shrink:0}
+.g-mid2{flex:1;min-width:0}
+.g-top,.g-bot{position:relative;height:13px;font-size:9.5px;color:#64748b}
+.g-top span,.g-bot span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.g-tmax{color:#ea580c}.g-tcur{font-weight:800}
+.g-track{height:10px;background:#eef2f7;border-radius:6px;position:relative;margin:1px 0}
+.g-band{position:absolute;top:0;height:10px;background:#bbf7d0;border-radius:6px}
+.g-mid{position:absolute;top:-2px;width:2px;height:14px;background:#475569}
+.g-max{position:absolute;top:-2px;width:0;height:14px;border-left:2px dashed #ea580c}
+.g-fwd{position:absolute;top:-3px;width:8px;height:16px;border:2px solid #2563eb;border-radius:3px;background:#fff;transform:translateX(-4px)}
+.g-cur{position:absolute;top:-3px;width:4px;height:16px;border-radius:2px}
+.g-val{width:148px;text-align:right;font-size:15px;font-weight:800;flex-shrink:0;line-height:1.25}
+.g-sub{display:block;font-size:9.5px;color:#94a3b8;font-weight:400;margin-top:1px}
+.g-legend{font-size:10.5px;color:#64748b;margin:-2px 0 9px;line-height:1.7}
+.sw{display:inline-block;border-radius:2px;vertical-align:-1px;margin-right:3px;width:10px;height:8px}
+.swb{background:#bbf7d0}.swm{background:#475569;width:3px;height:11px}
+.swx{border-left:2px dashed #ea580c;background:none;width:2px;height:11px}
+.swc{background:#dc2626;width:4px;height:11px}
+.swf{border:2px solid #2563eb;background:#fff;width:6px;height:9px}
+@media(max-width:620px){.g-row{flex-wrap:wrap}.g-lab{width:auto}.g-val{width:100%;text-align:left;margin-top:2px;font-size:14px}.g-val .g-sub{display:inline;margin-left:8px}}
+.hint{font-size:11.5px;color:#64748b;margin-top:8px;background:#f8fafc;padding:7px;border-radius:7px}
+.kv{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv td{padding:5px 4px;border-bottom:1px solid #f1f5f9;vertical-align:top}
+.kv td:first-child{color:#64748b;width:118px}
+.conv{margin-top:9px;font-size:12.5px;background:#f8fafc;padding:9px;border-radius:8px}
+.convt{font-size:11.5px;color:#64748b;margin-top:4px}
+.stxt{font-size:12.5px;margin:5px 0;color:#1e293b}
+.bb{font-size:12.5px;padding:8px;border-radius:8px;margin:5px 0}
+.bull{background:#f0fdf4}.bear{background:#fef2f2}
+.kv2{width:100%;border-collapse:collapse;font-size:12px}
+.kv2 th{text-align:left;color:#64748b;font-weight:600;padding:4px;border-bottom:1px solid #e2e8f0}
+.kv2 td{padding:4px;border-bottom:1px solid #f1f5f9}
+.muted{color:#94a3b8;font-size:11px}
+.disc{font-size:10.5px;color:#94a3b8;line-height:1.5}
+</style></head><body><div id="__snap_banner" style="font-family:system-ui,'Noto Sans TC',sans-serif;
+ background:#1a1d24;color:#c8cdd6;padding:10px 16px;font-size:13px;line-height:1.6;
+ border-bottom:2px solid #FF8C00">
+<b style="color:#FF8C00">元大金 2885</b> — 個股體質與估值儀表板
+&nbsp;｜&nbsp;快照時間 <b>2026-08-23 05:30 (UTC+8)</b>
+<div style="color:#8a9099;font-size:11px;margin-top:3px">本頁為延遲快照，僅供個人研究參考，不構成任何投資建議或要約。資料可能有誤或過時，使用者應自行查證。</div>
+</div>
+<div class='wrap'><div class="hd"><div class="hd-row"><div class="hd-t">元大金 2885 決策儀表板</div><a class="btn" href="/refresh">⟳ 盤中更新</a></div><div class="hd-p">64.0 <span class="hd-c" style="color:#16a34a">+3.06% ・ 近1月+8.59%</span></div><div class="hd-d">2026-08-22｜PE 24.9・PB 2.38・每股淨值 26.92・近四季EPS 2.57</div></div><div class="card hero"><div class="hero-top">📌 元大金 2885｜決策卡（體質 × 時機）</div><div class="lights"><div class="light"><div class="l-lab">長線體質</div><div class="l-big" style="color:#16a34a">🟢 佳</div><div class="l-conf">信心 60%</div></div><div class="light"><div class="l-lab">短線時機</div><div class="l-big" style="color:#16a34a">🟢 買點</div><div class="l-conf">信心 55%</div></div><div class="verdict"><div class="v-lab">綜合建議</div><div class="v-big" style="color:#16a34a">加碼</div><div class="v-up">合理價上緣 vs 現價 +14%</div></div></div><div class="notes"><div>🔎 體質：forward PE約11.4(模型暴量EPS~5.6)落歷史區間內、屬合理；機構共識EPS4.34→共識PE14.7偏高，量能回落則貴。trailing PE20.5/PB2.47歷史高。核心風險＝暴量續航</div><div>🔎 時機：動能強：近1月8.59%、近1季25.27%、近1年110.18%；外資買超324,977張。惟投信賣超-17,100、量比0.8，防追高</div></div><div class="levels"><div class="lv"><span>現價</span><b>64.0</b></div><div class="lv"><span>合理價·雙錨</span><b>PB32／PE61</b></div><div class="lv"><span>加碼區</span><b>≤ 29.3</b></div><div class="lv lv-sl"><span>停損參考</span><b>27.8</b></div></div></div><div class="card tgt"><div class="sec">🎯 預測目標價（forward，依 2026 量能情境）— 核心輸出</div><table class="kv2"><tr><th>量能情境</th><th>全年日均(億)</th><th>預估EPS</th><th>目標價(PE中位)</th><th>區間(25%–max)</th></tr><tr><td>量能大回落(回2024-25)</td><td>4,500</td><td>3.02</td><td><b>35</b></td><td class="muted">34–41</td></tr><tr><td>部分回落</td><td>6,500</td><td>3.73</td><td><b>44</b></td><td class="muted">43–50</td></tr><tr><td>維持YTD(2026至今)</td><td>9,459</td><td>5.22</td><td><b>61</b></td><td class="muted">60–70</td></tr><tr><td>續強(近5月)</td><td>12,000</td><td>6.5</td><td><b>76</b></td><td class="muted">74–88</td></tr></table><div class="hint">現價 <b>64.0</b>。<b>目標價全看 2026 暴量能否續航</b>：維持YTD(~9,459億)→目標~61(仍低現價約5%)；回落→35–44；續強→76+。「偏貴」源自 2025 trailing EPS(2.74)的假象；改用 forward 量能 EPS 後，估值高低 100% 取決於 EPS 軌跡。</div><div class="hint"><b>📊 期望值與不對稱性</b>：四情境×主觀機率(回落20%/部分回落30%/維持35%/續強15%) → EV≈0.2×35+0.3×44+0.35×61+0.15×76≈<b>53元</b>(對現價64.0約<b>−18%</b>)。盈虧平衡：收斂為「回落綜合≈40／續航綜合≈67」，要 EV=現價需續航機率<b>p≈90%</b>。連『維持YTD量能』目標也只有61(≈現價−5%)——要再漲須在破紀錄量能上續加速，<b>風險報酬不對稱</b>。</div></div><div class="card"><div class="sec">估值儀表（現價 vs 歷史區間）</div><div class="g-legend"><i class="sw swb"></i>歷史25–75%分位　<i class="sw swm"></i>歷史中位　<i class="sw swx"></i>歷史最高　<i class="sw swf"></i>forward(2026量能EPS)　<i class="sw swc"></i>現價　<span style="color:#94a3b8">｜歷史基礎＝2021–2025 各季「季均價÷近四季EPS／每股淨值」</span></div><div class="g-row"><div class="g-lab">本益比 PE</div><div class="g-mid2"><div class="g-top"><span class="g-tmax" style="left:50.1953125%">max 13.5</span><span class="g-tcur" style="left:90%;color:#dc2626">現價 24.9</span></div><div class="g-track"><div class="g-band" style="left:42.38715277777778%;width:5.949074074074069%"></div><div class="g-mid" style="left:43.502604166666664%"></div><div class="g-max" style="left:50.1953125%"></div><div class="g-fwd" style="left:42.38715277777778%"></div><div class="g-cur" style="left:92.5925925925926%;background:#dc2626"></div></div><div class="g-bot"><span style="left:45.36168981481481%">25–75%：11.4–13.0・中位 11.7</span></div></div><div class="g-val" style="color:#dc2626">24.9<span class="g-sub">vs中位 +113%・vs最高 +84%<br>歷史min–max 8.4–13.5<br>forward 11.4（藍標）</span></div></div><div class="g-row"><div class="g-lab">股價淨值比 PB</div><div class="g-mid2"><div class="g-top"><span class="g-tmax" style="left:52.967592592592595%">max 1.36</span><span class="g-tcur" style="left:90%;color:#dc2626">現價 2.38</span></div><div class="g-track"><div class="g-band" style="left:42.451967592592595%;width:5.842013888888886%"></div><div class="g-mid" style="left:45.95717592592592%"></div><div class="g-max" style="left:52.967592592592595%"></div><div class="g-cur" style="left:92.59259259259258%;background:#dc2626"></div></div><div class="g-bot"><span style="left:45.37297453703704%">25–75%：1.09–1.24・中位 1.18</span></div></div><div class="g-val" style="color:#dc2626">2.38<span class="g-sub">vs中位 +101%・vs最高 +75%<br>歷史min–max 1.03–1.36</span></div></div><div class="hint">解讀：現價（紅）在歷史帶之外，但這是『尺度』問題。以 Gordon 正當 PB=(ROE−g)/(r−g)（g=3%、r=10%）：歷史 PB 1.1–1.24 ⇔ ROE≈11%（吻合集團歷史ROE 11.1%）；現價 PB 2.39 ⇔ 市場隱含 ROE≈19–20% 可長期維持（前4月年化EPS 4.92／淨值26.92＝18.3% ROE）。故『PB +76% 極貴』是用 11%-ROE 的尺量 18%-ROE 的公司——真問題是『18% ROE 是結構性還是量能尖峰』，與量能續航是同一個賭注。forward 標（藍空心，2026暴量 EPS≈5.6）落回綠帶內 → 貴在 trailing、forward 合理，前提是量能續航。</div><div class="hint"><b>PE 多重基準</b>（現價 64.0）：trailing EPS 3.25→<b>19.7</b>(假象)｜法人 forward 4.51–4.68→<b>14.2–13.7</b>(貼近歷史上限13.5)｜暴量 EPS 5.6→<b>11.4</b>。<b>19.8 倍是 trailing 假象，估值高低 100% 取決於 EPS 軌跡。</b></div></div><div class="card"><div class="sec">★ 台股成交量（重點引擎 — 元大手續費命脈）</div><table class="kv"><tr><td>最新季日均量</td><td><b>10,209 億/日</b></td></tr><tr><td>量能位階</td><td>2026 大盤YTD日均10,209億，為2025(~4,160億)逾2倍</td></tr><tr><td>元大有效量代理</td><td>10,209 × 經紀市占≈13% ≈ <b>1,327 億/日</b></td></tr><tr><td>同期比較</td><td>2026暴量(TWSE)：5月達13,168億/日</td></tr><tr><td>MA5/MA20</td><td>8937 / 9580</td></tr></table><div class="conv"><b>量能→EPS 換算</b>（單季EPS=0.164+0.000128×日均量；情境 10,209億/日 → 預估年EPS ≈ <b>5.6</b>）<div class="convt">日均量 3,000→EPS 2.2｜3,800→2.6｜4,500→3.0｜5,300→3.4</div><div class="convt">※ 高量區（&gt;6,000億/日）採非線性保守折減（約 −5～7%），避免量能邊際貢獻線性外推高估；小表為線性示意。</div></div></div><div class="card"><div class="sec">獲利動能</div><table class="kv"><tr><td>月自結獲利YoY</td><td>2026/07月營收YoY +62.3%</td></tr><tr><td>各子公司獲利占比</td><td>證券+銀行約占稅後淨利90%(法說會)</td></tr><tr><td>ROE / ROA</td><td>約9.5%(TTM EPS/淨值) ／ —(財報無此欄)</td></tr><tr><td>市占(經紀/信用/投信)</td><td>外資持股26.54%、投信7.7%；5年均EPS 2.44(正常化用)</td></tr><tr><td>目標價(PE法)</td><td>63.8–72.8（中位65.5）</td></tr><tr><td>目標價(PB法)</td><td>29.3–33.4（中位31.8）</td></tr></table></div><div class="card"><div class="sec">股利政策（存股核心）</div><table class="kv"><tr><td>現金殖利率</td><td>2.8617%(2025)</td></tr><tr><td>連續配息年數</td><td>連續15年配息</td></tr><tr><td>配息率 payout</td><td>66%(2025配1.8/EPS2.74)</td></tr></table></div><div class="card"><div class="sec">金控特有體質（銀行＋集團安全指標・一般人最常漏）</div><table class="kv"><tr><td>元大銀行 NIM 淨利差</td><td>每次更新(法說會/IR)</td></tr><tr><td>逾放比 NPL</td><td>每次更新(金管會銀行局)</td></tr><tr><td>備抵呆帳覆蓋率</td><td>每次更新(金管會銀行局)</td></tr><tr><td>集團資本適足率 BIS</td><td>每次更新(法說會/公開資訊觀測站)</td></tr><tr><td>雙重槓桿比</td><td>每次更新(法說會)</td></tr></table></div><div class="card"><div class="sec">籌碼</div><table class="kv"><tr><td>三大法人(外/投/自)</td><td>324,977(張，外資) / -17,100(張，投信) / 0(張，自營，TWSE T86)</td></tr><tr><td>大戶/外資動向</td><td>大戶(400張↑)季增減-8,823張、外資60日買賣超2,545,745千元</td></tr><tr><td>融資維持率</td><td>None%</td></tr><tr><td>主力分點</td><td>主力買賣超 -2,498(張，分點淨額/主力券商日)</td></tr></table></div><div class="card"><div class="sec">技術</div><table class="kv"><tr><td>均線/型態</td><td>MA5 63.65／MA20 64.35／MA60 62.07（非完全多排）</td></tr><tr><td>KD / MACD</td><td>K 23.2 / D 38.5 / DIF -0.33・OSC -0.65（空方）</td></tr><tr><td>相對強弱RS</td><td>近1月8.59%(相對自身)</td></tr><tr><td>量比/內外盤/振幅</td><td>0.8（今日量/20日均量） / —(僅即時源) / —(僅即時源)</td></tr><tr><td>多時段報酬</td><td>月8.59% 季25.27% 年110.18% YTD74.34%</td></tr></table></div><div class="card"><div class="sec">戰略結構層（金控版精華・置頂思維）</div><div class="stxt"><b>Q1 為什麼是元大：</b>證券經紀+ETF投信+期貨三龍頭、自家通路互鎖</div><div class="stxt"><b>Q5 不能做的事：</b>獲利高度依賴台股成交量(無法自創量)；受金管會資本限制</div><div class="stxt"><b>Q6 敘事vs真實：</b>敘事『穩定存股』vs真實：高Beta證券型金控，2026暴量放大獲利也放大回落風險</div><div class="stxt"><b>結構鎖定強度：</b>中高(規模+品牌+通路)，循環性鎖定</div><div class="stxt"><b>瓦解條件：</b>台股暴量回落(最關鍵)、降息壓縮利差、股災衝擊自營+壽險、ETF降費戰</div></div><div class="card"><div class="sec">Bull / Bear 雙情境（等深度）</div><div class="bb bull"><b>🐂 Bull：</b>2026暴量(YTD10,209億)+2026/07月營收YoY+62.3%；續航→模型EPS~5.6、目標60-71、ROE跳升</div><div class="bb bear"><b>🐻 Bear：</b>暴量不可持續(泡沫)：回落→機構共識EPS僅4.34、目標49-59；trailing PE20.5/PB2.47歷史高</div></div><div class="card"><div class="sec">法人觀點</div><table class="kv"><tr><td>券商目標價/評等</td><td>機構共識2026 EPS 4.34→共識目標約49-59；2027 EPS 4.68</td></tr></table></div><div class="card"><div class="sec">驗證軌跡（信心度・正反・來源）</div><table class="kv2"><tr><th>論點</th><th>信心度</th><th>性質</th><th>依據</th></tr><tr><td>量能↔EPS關係</td><td>90%+</td><td>實證</td><td class="muted">R²=0.43；2026Q1模型1.20 vs實際1.08</td></tr><tr><td>模型forward EPS~5.6</td><td>60-70%</td><td>推論</td><td class="muted">前提暴量續航</td></tr><tr><td>機構共識EPS 4.34</td><td>—</td><td>外部</td><td class="muted">DB基本資料(分析師)</td></tr><tr><td>forward合理(forward PE~11.4)</td><td>60-70%</td><td>推論</td><td class="muted">vs歷史PE區間</td></tr><tr><td>金控銀行安全(NIM/逾放/覆蓋)</td><td>—</td><td>每次更新</td><td class="muted">法說會/金管會</td></tr></table><div class="hint">正面證據 1 ／ 反面證據 1（正反等量原則）｜資料源：台股DATABASE2026.xlsb + 季年報DATABASE + daliy主力券商 + 財報資料.xlsx(2026-08-22)、TWSE FMTQIK大盤量(YTD+MA)、TWSE T86三大法人(自營)、KD/MACD自算(收盤序列)</div></div><div class="card"><div class="disc">本儀表為量化決策支援，不構成投資建議；作者非持牌投資顧問。量能→EPS 為關聯模型(R²=0.43)非結構會計模型，含行情beta；PE/PB 區間僅2021–2025；PB 採總權益基礎(廠商母公司基礎約高6%)。決策前請再核對最新財報與即時數據。｜更新 2026-08-22｜本機使用。</div></div></div></body></html>

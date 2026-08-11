@@ -1,0 +1,208 @@
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>市場儀表板快照</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0d0f13;color:#c8cdd6;
+ font-family:system-ui,'Noto Sans TC',sans-serif;padding:28px 20px;line-height:1.6}
+.wrap{max-width:920px}
+h1{font-size:20px;margin:0 0 4px;color:#fff}
+h2{font-size:15px;color:#fff;margin:30px 0 8px;padding-bottom:6px;border-bottom:1px solid #2a2f38}
+.sub{color:#8a9099;font-size:12px;margin-bottom:4px}
+.note{color:#8a9099;font-size:12px;margin:6px 0 12px}
+.note b{color:#c8cdd6}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.card{display:block;text-decoration:none;background:#161a21;border:1px solid #2a2f38;
+ border-radius:8px;padding:15px 17px;transition:border-color .15s,transform .15s}
+.card:hover{border-color:#FF8C00;transform:translateY(-2px)}
+.card.dead{opacity:.45}
+.nm{color:#fff;font-size:15px;font-weight:700}
+.ds{color:#8a9099;font-size:12px;margin-top:3px}
+.ts{color:#5f6672;font-size:11px;margin-top:9px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:6px}
+th{text-align:left;color:#8a9099;font-weight:500;font-size:11.5px;
+ border-bottom:1px solid #2a2f38;padding:5px 10px 5px 0}
+td{padding:6px 10px 6px 0;border-bottom:1px solid #1b1f26;vertical-align:top}
+.nm2{color:#e6eaf0;font-weight:600;white-space:nowrap}
+.ds2{color:#8a9099}
+code{background:#1b1f26;color:#9ec5e6;padding:1px 6px;border-radius:3px;
+ font-family:ui-monospace,Consolas,monospace;font-size:12px;white-space:nowrap}
+a.lan{display:inline-block;background:#1b2733;color:#7fc4ff;text-decoration:none;
+ padding:3px 9px;border-radius:4px;border:1px solid #2c4056;
+ font-family:ui-monospace,Consolas,monospace;font-size:12px;white-space:nowrap;
+ transition:background .12s,border-color .12s}
+a.lan:hover{background:#22384c;border-color:#3d6a94;color:#a9d8ff}
+a.cloud{color:#7fc4ff;text-decoration:none;font-family:ui-monospace,Consolas,monospace;font-size:12px;word-break:break-all}
+a.cloud:hover{text-decoration:underline}
+.host{display:inline-block;font-size:11px;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.h502{background:#16281c;color:#6fbf8a;border:1px solid #2c4d38}
+.hbbg{background:#2a2114;color:#d9a441;border:1px solid #4d3d1c}
+.rmk{color:#7a8290;font-size:12px;min-width:150px}
+.snapmark{font-size:10px;color:#FF8C00;text-decoration:none;margin-left:5px;white-space:nowrap}
+.snapmark:hover{text-decoration:underline}
+.tw{overflow-x:auto}
+.auto{color:#5faf7a;white-space:nowrap} .manual{color:#d9a441;white-space:nowrap}
+td.retired{color:#7a8290;white-space:nowrap}
+details.retired{margin-top:34px}
+details.retired summary{cursor:pointer;color:#5f6672;font-size:12px;list-style:none;
+ padding:6px 0;border-top:1px solid #1b1f26;user-select:none}
+details.retired summary:hover{color:#8a9099}
+details.retired summary::before{content:"▸ ";font-size:10px}
+details.retired[open] summary::before{content:"▾ "}
+details.retired table{margin-top:8px;opacity:.75}
+footer{color:#5f6672;font-size:11px;margin-top:30px;border-top:1px solid #2a2f38;padding-top:12px}
+</style></head><body><div class="wrap">
+
+<h1>儀表板網址統整</h1>
+<div class="sub">更新日期 2026-08-11　｜　快照時間 <b style="color:#c8cdd6">2026-08-23 05:30 (UTC+8)</b></div>
+
+<h2>公開快照（任何地方都能開）</h2>
+<p class="note">下面四支由 502 主機每 30 分鐘發布一次的靜態頁面。
+<b>即使主機關機、當機或重灌，這裡仍看得到最後一次成功發布的內容</b> ——
+資料會停在那個時間點，但頁面永遠打得開。（對應下方 LAN 表中標「↑快照」的列。）</p>
+<div class="grid">
+  <a class="card" id="taiex" href="taiex/">
+    <div class="nm">台股大盤儀表板</div><div class="ds">加權指數壓力/結構判讀</div>
+    <div class="ts">快照 2026-08-23 05:30 (UTC+8)</div></a>
+  <a class="card" id="yuanta2885" href="yuanta2885/">
+    <div class="nm">元大金 2885</div><div class="ds">個股體質與估值儀表板</div>
+    <div class="ts">快照 2026-08-23 05:30 (UTC+8)</div></a>
+  <a class="card" id="usdtwd" href="usdtwd/">
+    <div class="nm">台幣美金匯率</div><div class="ds">USD/TWD 預測模型</div>
+    <div class="ts">快照 2026-08-23 05:30 (UTC+8)</div></a>
+  <a class="card" id="flatbottom" href="flatbottom/">
+    <div class="nm">長期平躺選股</div><div class="ds">跌深價值股篩選與質化研究</div>
+    <div class="ts">快照 2026-08-23 05:30 (UTC+8)</div></a>
+</div>
+
+<h2>LAN 網址（連公司內網的裝置皆可開啟）</h2>
+<p class="note">點網址直接開啟。<b>只有連上公司內網才通</b> —— 外網或手機行動網路
+點會連不到（私有 IP 不可路由）。主機關機時該服務完全無法存取。
+<span class="host h502">502 電腦</span> = <code>192.168.50.170</code>，
+<span class="host hbbg">Bloomberg 電腦</span> = <code>192.168.50.178</code>。</p>
+<div class="tw"><table>
+  <tr><th>儀表板</th><th>LAN 網址</th><th>主機</th><th>更新</th><th>備註</th></tr>
+    <tr>
+      <td class="nm2">台股加權指數儀表板 <a class="snapmark" href="#taiex" title="有公開快照">↑快照</a></td>
+      <td><a class="lan" href="http://192.168.50.170:8600/">192.168.50.170:8600</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="auto">已全自動</td>
+      <td class="rmk"></td></tr>
+    <tr>
+      <td class="nm2">美金/台幣匯率預測儀表板 <a class="snapmark" href="#usdtwd" title="有公開快照">↑快照</a></td>
+      <td><a class="lan" href="http://192.168.50.170:8601/">192.168.50.170:8601</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="auto">半自動</td>
+      <td class="rmk">Bloomberg 數據暫時仍需人工更新</td></tr>
+    <tr>
+      <td class="nm2">　└ 子網頁：結匯 K 線圖</td>
+      <td><a class="lan" href="http://192.168.50.170:8601/kline">192.168.50.170:8601/kline</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="">—</td>
+      <td class="rmk"></td></tr>
+    <tr>
+      <td class="nm2">元大金 2885 決策儀表板 <a class="snapmark" href="#yuanta2885" title="有公開快照">↑快照</a></td>
+      <td><a class="lan" href="http://192.168.50.170:8602/">192.168.50.170:8602</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="auto">已全自動</td>
+      <td class="rmk"></td></tr>
+    <tr>
+      <td class="nm2">SPY 當沖繪圖網頁</td>
+      <td><a class="lan" href="http://192.168.50.170:5500/">192.168.50.170:5500</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="auto">半自動</td>
+      <td class="rmk">2026-07-27 更新（舊址 .165:5500 已退役）；SOP 待更新</td></tr>
+    <tr>
+      <td class="nm2">原白板資料網頁</td>
+      <td><a class="lan" href="http://192.168.50.178:8501/">192.168.50.178:8501</a></td>
+      <td><span class="host hbbg">Bloomberg 電腦</span></td>
+      <td class="manual">人工</td>
+      <td class="rmk">目前由怡君每日手動運行與檢查</td></tr>
+    <tr>
+      <td class="nm2">台股篩選儀表板（起漲點）</td>
+      <td><a class="lan" href="http://192.168.50.170:8888/">192.168.50.170:8888</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="">—</td>
+      <td class="rmk"></td></tr>
+    <tr>
+      <td class="nm2">AI 泡沫監測儀表板</td>
+      <td><a class="lan" href="http://192.168.50.178:8808/">192.168.50.178:8808</a></td>
+      <td><span class="host hbbg">Bloomberg 電腦</span></td>
+      <td class="manual">人工</td>
+      <td class="rmk">run_daily.py → dashboard_server.py（皆在 ai_bubble_monitor 資料夾）</td></tr>
+    <tr>
+      <td class="nm2">底部平躺標的篩選 <a class="snapmark" href="#flatbottom" title="有公開快照">↑快照</a></td>
+      <td><a class="lan" href="http://192.168.50.170:8808/">192.168.50.170:8808</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="auto">已全自動</td>
+      <td class="rmk">2026-07 老闆在 Julia 請假期間額外要求的條件篩選</td></tr>
+    <tr>
+      <td class="nm2">操作策略 SOP 儀表板</td>
+      <td><a class="lan" href="http://192.168.50.170:8801/">192.168.50.170:8801</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="auto">已全自動</td>
+      <td class="rmk">工作排程器每日自動更新；資料來源為 Julia 建立的操作策略 SOP</td></tr>
+    <tr>
+      <td class="nm2">　└ 子網頁：監控 & 歷史比較</td>
+      <td><a class="lan" href="http://192.168.50.170:8802/">192.168.50.170:8802</a></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="">—</td>
+      <td class="rmk"></td></tr>
+</table></div>
+
+<h2>雲端網址（任何網路皆可開啟）</h2>
+<p class="note">這些跑在 GitHub，<b>與主機無關</b> —— 502 關機也照樣打得開。</p>
+<div class="tw"><table>
+  <tr><th>儀表板</th><th>雲端網址</th><th>伺服器</th><th>更新</th><th>備註</th></tr>
+    <tr>
+      <td class="nm2">台期正逆價差即時監控</td>
+      <td><a class="cloud" href="https://shuye1668.github.io/taifex-spread-pages/" target="_blank" rel="noopener">shuye1668.github.io/taifex-spread-pages</a></td>
+      <td class="ds2">GitHub (shuye1668)</td>
+      <td class="auto">已全自動</td>
+      <td class="rmk"></td></tr>
+    <tr>
+      <td class="nm2">日圓/台幣匯率預測儀表板</td>
+      <td><a class="cloud" href="https://viovenus.github.io/jpytwd-dashboard/" target="_blank" rel="noopener">viovenus.github.io/jpytwd-dashboard</a></td>
+      <td class="ds2">GitHub (Michelle)</td>
+      <td class="auto">已全自動</td>
+      <td class="rmk">平日每天 08:15 Claude Routine 查新聞更新文字內容</td></tr>
+    <tr>
+      <td class="nm2">儀表板總表快照（本頁）</td>
+      <td><a class="cloud" href="https://shuye1668.github.io/market-dashboards/" target="_blank" rel="noopener">shuye1668.github.io/market-dashboards</a></td>
+      <td class="ds2">GitHub (shuye1668)</td>
+      <td class="auto">每 30 分自動</td>
+      <td class="rmk">即使 502 未開機，仍可看到最後一次成功發布的內容</td></tr>
+    <tr>
+      <td class="nm2">SPY 1分K 走勢圖（僅股價）</td>
+      <td><a class="cloud" href="https://shuye1668.github.io/spy-intraday-chart/" target="_blank" rel="noopener">shuye1668.github.io/spy-intraday-chart</a></td>
+      <td class="ds2">GitHub (shuye1668)</td>
+      <td class="auto">雲端即時</td>
+      <td class="rmk">GitHub Actions 用 yfinance 更新；無交易紀錄；完全不依賴本機主機</td></tr>
+</table></div>
+
+<h2>使用說明</h2>
+<p class="note">
+• <b>LAN 網址</b>只有連上公司內網才通；外網或手機行動網路點會連不到。<br>
+• <b>雲端網址</b>任何網路都能開，與主機是否開機無關。<br>
+• 公開快照每頁最上方橫幅標示<b>快照時間</b> —— 那是資料的實際時點，不是你開啟的時間；
+  距今超過一天代表主機那段期間沒開或發布失敗。<br>
+• 快照版的互動功能（標記、備註、即時查詢）<b>不會運作</b>，那些需要後端；要用請連 LAN 版。<br>
+• 502 主機各服務為常駐，每 10 分鐘由看門狗檢查、異常會自動拉起；
+  週末/夜間關機期間排程不執行，開機後補跑。<br>
+• 個人化內容（自選標記、部位資訊）已在發布前移除，公開快照不含這些資料。
+</p>
+
+<details class="retired">
+  <summary>已退役／備用（1）</summary>
+  <div class="tw"><table>
+    <tr><th>名稱</th><th>舊 LAN 網址</th><th>主機</th><th>說明</th></tr>
+    <tr>
+      <td class="nm2" style="color:#6b7280">台期正逆價差即時監控（本機版）</td>
+      <td><span class="lan" style="opacity:.55">192.168.50.170:8701</span></td>
+      <td><span class="host h502">502 電腦</span></td>
+      <td class="rmk">已退為備用。改用雲端版（見上方雲端表 taifex-spread-pages），不須人工更新、不耗 AI Token、任何網路可存取</td></tr>
+  </table></div>
+</details>
+
+<footer>本頁為延遲快照，僅供個人研究參考，不構成任何投資建議或要約。資料可能有誤或過時，使用者應自行查證。</footer>
+</div></body></html>
